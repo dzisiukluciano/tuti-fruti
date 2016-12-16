@@ -1,0 +1,66 @@
+.newQuery{
+  position: absolute;
+  top:13%;
+  left:10%;
+  height: 80%;
+  width:80%;
+  background-color: white;
+  border-radius: 20px;
+  border:3px solid #337ab7;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+div.addquery-div-btnclose{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  height: 10%;
+  width: 100%;
+}
+
+div.addquery-form{
+  height: 80%;
+  width: 100%;
+}
+
+div.addquery-btn-save{
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.newQueryContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonClose{
+  width: 3%;
+  height: 70%;
+  color: #337ab7;
+  margin: 5px;
+  border: 2px solid #337ab7;
+  border-radius: 10px;
+  font-weight: bolder;
+}
+button:focus {
+  outline: none;
+}
+.buttonClose:hover{
+  width: 3%;
+  height: 70%;
+  margin: 5px;
+  color: silver;
+  border: 2px solid #337ab7;
+  border-radius: 10px;
+  font-weight: bolder;
+  background-color: #337ab7
+}

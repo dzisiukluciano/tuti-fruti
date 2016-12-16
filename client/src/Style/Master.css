@@ -1,0 +1,34 @@
+div {
+  height: 100%;
+  width: : 100%;
+}
+
+html{
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+body{
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(146,117,225,1);
+  background: -moz-linear-gradient(top, rgba(146,117,225,1) 0%, rgba(126,231,226,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(146,117,225,1)), color-stop(100%, rgba(126,231,226,1)));
+  background: -webkit-linear-gradient(top, rgba(146,117,225,1) 0%, rgba(126,231,226,1) 100%);
+  background: -o-linear-gradient(top, rgba(146,117,225,1) 0%, rgba(126,231,226,1) 100%);
+  background: -ms-linear-gradient(top, rgba(146,117,225,1) 0%, rgba(126,231,226,1) 100%);
+  background: linear-gradient(to bottom, rgba(146,117,225,1) 0%, rgba(126,231,226,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#9275e1', endColorstr='#7ee7e2', GradientType=0 );
+}
+#app{
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0);
+}
+.full{
+  height: 100%;
+  width: 100%;
+}
