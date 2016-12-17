@@ -1,0 +1,17 @@
+{
+  "name": "sse-tuto",
+  "version": "0.0.1",
+  "description": "Tutorial of server sent events",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sebastian Gonzalez",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "hapi": "^16.0.1",
+    "inert": "^4.0.3",
+    "socket.io": "^1.7.2"
+  }
+}
