@@ -1,6 +1,7 @@
 import React from "react";
 import Style from './Layout.css';
 import $ from 'jquery';
+import Login from '../Login/Login.jsx';
 
 export default class Layout extends React.Component{
 
@@ -44,10 +45,12 @@ export default class Layout extends React.Component{
   render(){
     return(
       <div >
-        <ul id="messages"></ul>
-        <input id="m" autoComplete="off"/><button type="button" onClick={this.sendMessage.bind(this)}>Send</button>
+        <Login/>
       </div>
     );
+
+    // <ul id="messages"></ul>
+    // <input id="m" autoComplete="off"/><button type="button" onClick={this.sendMessage.bind(this)}>Send</button>
   }
 
 }
