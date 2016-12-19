@@ -1,5 +1,6 @@
 import React from 'react';
 import Style from './Login.css';
+import { Link } from 'react-router';
 
 export default class Login extends React.Component{
 
@@ -14,7 +15,7 @@ export default class Login extends React.Component{
             <input className="login-form-data-input" type="text"></input>
           </div>
           <div className="login-form-data">
-            <button className="login-form-data-button" type="button"><strong>GO WITH IT</strong></button>
+            <Link to="RoomList"> <button className="login-form-data-button" type="button"><strong>GO WITH IT</strong></button> </Link>
           </div>
         </div>
       </div>

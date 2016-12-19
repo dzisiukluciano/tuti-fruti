@@ -1,5 +1,5 @@
 .login{
-  background-image: url('./Resources/login-texture-blur.png');
+  background-image: url('../Resources/login-texture-blur.png');
   display: flex;
   flex-direction: column;
   justify-content: center;

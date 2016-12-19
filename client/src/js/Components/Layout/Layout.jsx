@@ -10,7 +10,7 @@ export default class Layout extends React.Component{
     var username = 'guest';//prompt('ingrese su nombre de usuario');
 
     this.state = {
-      socket : io('http://192.168.0.103:3000'),
+      socket : io('http://192.168.10.198:3000'),
       user : username
     }
   }
@@ -44,13 +44,8 @@ export default class Layout extends React.Component{
 
   render(){
     return(
-      <div >
-        <Login/>
-      </div>
+      <Login/>
     );
-
-    // <ul id="messages"></ul>
-    // <input id="m" autoComplete="off"/><button type="button" onClick={this.sendMessage.bind(this)}>Send</button>
   }
 
 }
