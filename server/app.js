@@ -12,7 +12,7 @@ server.connection({ port:3000 });
 var io = require('socket.io')(server.listener);
 
 io.on('connection', function(socket){
-  console.log('users connected:');
+  console.log('user connected');
 
   socket.on('disconnect', function(){
     console.log('user disconnected');

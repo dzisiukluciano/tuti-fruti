@@ -1,0 +1,63 @@
+.roomList{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-image: url('../Resources/login-texture-blur.png');
+}
+
+.roomList-list{
+  margin-top: 5%;
+  height: auto;
+  width: 30%;
+  max-width: 30%;
+  min-height: 30%;
+  max-height: 70%;
+  border-radius: 10px;
+  background-color: rgba(125,0,0,0.4);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.roomList-newRoom{
+  margin-top:5%;
+  border-radius: 10px;
+  height: 5%;
+  width: 30%;
+}
+
+.roomList-room{
+  text-align: center;
+  margin: 5%;
+  padding: 5%;
+  border-radius: 10px;
+  background-color: rgba(255,255,255,0.7);
+  width: 90%;
+}
+
+.scrollbar
+{
+	margin-left: 30px;
+	float: left;
+	overflow-y: auto;
+}
+
+.scrollbar::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: rgb(108, 3, 3);
+}
+.scrollbar::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: rgb(108, 3, 3);
+}
+.scrollbar::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #D62929;
+}

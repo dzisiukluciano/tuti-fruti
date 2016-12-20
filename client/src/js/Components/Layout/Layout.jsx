@@ -1,6 +1,9 @@
 import React from "react";
 import Style from './Layout.css';
 import $ from 'jquery';
+import Login from '../Login/Login.jsx';
+import { Router , Route , Link , hashHistory } from 'react-router';
+import RoomList from  "../RoomList/RoomList.jsx"
 
 export default class Layout extends React.Component{
 
@@ -9,7 +12,7 @@ export default class Layout extends React.Component{
     var username = 'guest';//prompt('ingrese su nombre de usuario');
 
     this.state = {
-      socket : io('http://192.168.0.103:3000'),
+      socket : io('http://192.168.10.198:3000'),
       user : username
     }
   }
@@ -43,10 +46,10 @@ export default class Layout extends React.Component{
 
   render(){
     return(
-      <div >
-        <ul id="messages"></ul>
-        <input id="m" autoComplete="off"/><button type="button" onClick={this.sendMessage.bind(this)}>Send</button>
-      </div>
+    <Router history={hashHistory} >
+      <Route path="/" component={ Login }/>
+      <Route path="/RoomList" component={ RoomList }/>
+    </Router>
     );
   }
 
