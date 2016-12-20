@@ -1,31 +1,42 @@
 import React from 'react';
 import Style from './RoomList.css';
+import { Link } from 'react-router';
+import NewRoomForm from  "../NewRoomForm/NewRoomForm.jsx";
 
-export default class Login extends React.Component{
+export default class RoomList extends React.Component{
+
+  constructor(){
+    super();
+    this.state = {
+      new : false
+    }
+  }
+
+  closeForm(e){
+    this.setState({
+      new : false
+    });
+  }
+
+  openForm(e){
+    this.setState({
+      new : true
+    });
+  }
 
   render(){
+
+  let newForm = "";
+      if(this.state.new)
+        newForm =  <NewRoomForm close={this.closeForm.bind(this)}/>
+
+
     return(
       <div className="roomList">
-        <button className="roomList-newRoom">New Room</button>
+        {newForm}
+        <button className="roomList-newRoom" onClick={this.openForm.bind(this)}>New Room</button>
         <div className="roomList-list scrollbar">
-          <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
-            <div className="roomList-room">THIS IS A ROOM</div>
+          <div className="roomList-room" key ={1} index={1}>THIS IS A ROOM</div>
         </div>
       </div>
     )

@@ -3,7 +3,7 @@ import Style from './Layout.css';
 import $ from 'jquery';
 import Login from '../Login/Login.jsx';
 import { Router , Route , Link , hashHistory } from 'react-router';
-import RoomList from  "../RoomList/RoomList.jsx"
+import RoomList from  "../RoomList/RoomList.jsx";
 
 export default class Layout extends React.Component{
 

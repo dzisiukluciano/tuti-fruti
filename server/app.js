@@ -6,6 +6,7 @@ const log = console.log;
 
 const server = new Hapi.Server();
 
+const gameRooms = [];
 
 server.connection({ port:3000 });
 
@@ -25,6 +26,18 @@ io.on('connection', function(socket){
   socket.on('chat message', function(msg){
     console.log("broadcast notification");
     socket.broadcast.emit('alert message',msg);
+  });
+
+  socket.on('addGameRoom',function(msg){
+    console.log("adding game room");
+    gameRooms.push(msg);
+    socket.emit('updateGameRooms',gameRooms);
+  });
+
+  socket.on('removeGameRoom',function(msg){
+    console.log("removing game room");
+    gameRooms.slice(1,msg.index);
+    socket.emit('updateGameRooms',gameRooms);
   });
 });
 
