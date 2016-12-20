@@ -15,19 +15,22 @@ export default class NewRoomForm extends React.Component{
             <button className="newRoomForm-form-close-btn" onClick={this.close.bind(this)}><strong>&times;</strong></button>
           </div>
           <div id="roomName-input" className="newRoomForm-form-data">
-            <div>
-              <label>Name</label>
-              <input className="" type="text">
+            <div className="newRoomForm-form-data-row">
+              <label className="newRoomForm-form-data-row-label">Name</label>
+              <input className="newRoomForm-form-data-row-input" type="text">
               </input>
             </div>
-            <label>Max players</label>
+            <div className="newRoomForm-form-data-row">
+              <label className="newRoomForm-form-data-row-label">Max players</label>
               <select>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
               </select>
-            <div>
+            </div>
+            <div className="newRoomForm-form-data-row">
+              <button className="newRoomForm-form-data-row-btn">Save</button>
             </div>
           </div>
         </div>
