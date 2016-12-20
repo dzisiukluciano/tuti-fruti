@@ -2,6 +2,8 @@ import React from "react";
 import Style from './Layout.css';
 import $ from 'jquery';
 import Login from '../Login/Login.jsx';
+import { Router , Route , Link , hashHistory } from 'react-router';
+import RoomList from  "../RoomList/RoomList.jsx"
 
 export default class Layout extends React.Component{
 
@@ -44,7 +46,10 @@ export default class Layout extends React.Component{
 
   render(){
     return(
-      <Login/>
+    <Router history={hashHistory} >
+      <Route path="/" component={ Login }/>
+      <Route path="/RoomList" component={ RoomList }/>
+    </Router>
     );
   }
 

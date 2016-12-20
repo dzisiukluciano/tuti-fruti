@@ -6,9 +6,26 @@ export default class Login extends React.Component{
   render(){
     return(
       <div className="roomList">
-        <div className="roomList-list">
-          HOLA HOLA HOLA
-          HOLA HOLA HOLA
+        <button className="roomList-newRoom">New Room</button>
+        <div className="roomList-list scrollbar">
+          <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
+            <div className="roomList-room">THIS IS A ROOM</div>
         </div>
       </div>
     )
