@@ -16,7 +16,9 @@ export default class NewRoomForm extends React.Component{
       this.props.socket.emit('addGameRoom',{
         name: name,
         maxPlayers: maxPlayers
-      });
+    });
+
+      this.close();
     }
   }
 

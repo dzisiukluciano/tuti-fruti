@@ -7,8 +7,11 @@ export default class Main extends React.Component{
 
   constructor(){
     super();
+
+    let socket = io('http://192.168.10.198:3000');
+
     this.state = {
-      socket : io('http://192.168.0.105:3000')
+      socket : socket
     }
   }
 
@@ -22,6 +25,7 @@ export default class Main extends React.Component{
     return(
       <div className="main-div">
         <div className='main-header'>
+          Tuti-Fruti
         </div>
         <div className='main-body'>
           {childrenWithProps}

@@ -29,17 +29,14 @@ io.on('connection', function(socket){
   });
 
   socket.on('addGameRoom',function(msg){
-    console.log("adding game room",msg);
-    console.log('gameRooms before: ',gameRooms);
     gameRooms.push(msg);
-    console.log('gameRooms after: ',gameRooms);
-    socket.emit('updateGameRooms',gameRooms);
+    console.log("room added");
+    io.emit('updateGameRooms',gameRooms);
   });
 
   socket.on('removeGameRoom',function(msg){
-    console.log("removing game room");
     gameRooms.slice(1,msg.index);
-    socket.emit('updateGameRooms',gameRooms);
+    io.emit('updateGameRooms',gameRooms);
   });
 });
 
@@ -49,6 +46,24 @@ server.register(require('inert'),
     if (err) {
       throw err;
     }
+
+    server.route({
+    method: 'GET',
+    path: '/getRoomsList',
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
+    handler: function (request, reply) {
+        //mysqlConnection.query('SELECT ID FROM Users;',function(err,rows,fields){
+            //if(err) throw err;
+            //ids = rows;
+            reply(gameRooms).code(200);
+        //});
+    }
+  });
 
     server.route({
       method: 'GET',
