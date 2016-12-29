@@ -28,7 +28,7 @@ export default class RoomList extends React.Component{
 
   let newForm = "";
       if(this.state.new)
-        newForm =  <NewRoomForm close={this.closeForm.bind(this)}/>
+        newForm =  <NewRoomForm close={this.closeForm.bind(this)} socket={this.props.socket}/>
 
 
     return(

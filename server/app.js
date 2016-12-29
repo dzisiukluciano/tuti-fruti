@@ -29,8 +29,10 @@ io.on('connection', function(socket){
   });
 
   socket.on('addGameRoom',function(msg){
-    console.log("adding game room");
+    console.log("adding game room",msg);
+    console.log('gameRooms before: ',gameRooms);
     gameRooms.push(msg);
+    console.log('gameRooms after: ',gameRooms);
     socket.emit('updateGameRooms',gameRooms);
   });
 

@@ -1,5 +1,9 @@
 .login{
-  background-image: url('../Resources/login-texture-blur.png');
+  bbackground: #ff3232; /* Old browsers */
+background: -moz-linear-gradient(top,  #ff3232 0%, #f2da82 50%, #ff8997 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #ff3232 0%,#f2da82 50%,#ff8997 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #ff3232 0%,#f2da82 50%,#ff8997 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3232', endColorstr='#ff8997',GradientType=0 ); /* IE6-9 */
   display: flex;
   flex-direction: column;
   justify-content: center;
