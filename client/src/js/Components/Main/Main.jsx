@@ -2,25 +2,46 @@ import React from 'react';
 import Style from './Main.css';
 import Game from '../Game/Game.jsx';
 import RoomList from '../RoomList/RoomList.jsx';
+import { hashHistory } from 'react-router';
 
 export default class Main extends React.Component{
 
-  constructor(){
-    super();
+  static defaultProps = {
+      socket : io('http://192.168.0.105:3000'),
+  };
 
-    let socket = io('http://192.168.10.198:3000');
-
+  constructor(props,defaultProps){
+    super(props,defaultProps);
     this.state = {
-      socket : socket
+      playing:false,
+      room : null
     }
   }
 
-  render(){
+  enterRoom(room){
+    console.log("entering room");
+    this.setState({
+      room:room,
+      playing:true
+    });
+    //hashHistory.push('/Game');
+  }
 
+
+  render(){
     var self = this;
     var childrenWithProps = React.Children.map(this.props.children, function(child) {
-            return React.cloneElement(child, { socket: self.state.socket});
-        });
+
+        if(self.state.plaiying){
+            //If the player is playing, we the child will be Game.jsx so we pass the respective props
+            console.log('rendering game with correct props');
+            return React.cloneElement(child,{socket:self.props.socket , room:self.state.room })
+        }
+        else{
+          //If the player is not playing, we the child will be RoomList.jsx so we pass the respective props
+          return React.cloneElement(child, { socket: self.props.socket , enterRoom:self.enterRoom.bind(self)});
+        }
+      });
 
     return(
       <div className="main-div">

@@ -27,15 +27,6 @@
   width: 30%;
 }
 
-.roomList-room{
-  text-align: center;
-  margin: 5%;
-  padding: 5%;
-  border-radius: 10px;
-  background-color: rgba(255,255,255,0.7);
-  width: 90%;
-}
-
 .scrollbar
 {
 	float: left;

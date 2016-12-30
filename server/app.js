@@ -7,6 +7,7 @@ const log = console.log;
 const server = new Hapi.Server();
 
 const gameRooms = [];
+const categories = ["Nombre","Color","Pais/Provincia/Estado","Cosa","Marca","Comida"];
 
 server.connection({ port:3000 });
 
@@ -57,11 +58,21 @@ server.register(require('inert'),
         }
     },
     handler: function (request, reply) {
-        //mysqlConnection.query('SELECT ID FROM Users;',function(err,rows,fields){
-            //if(err) throw err;
-            //ids = rows;
-            reply(gameRooms).code(200);
-        //});
+      reply(gameRooms).code(200);
+    }
+    });
+
+    server.route({
+    method: 'GET',
+    path: '/getCategories',
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
+    handler: function (request, reply) {
+        reply(categories).code(200);
     }
   });
 

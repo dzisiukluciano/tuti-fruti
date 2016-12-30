@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import $ from 'jquery';
 import Style from './RoomList.css';
 import NewRoomForm from  "../NewRoomForm/NewRoomForm.jsx";
+import Room from  "../Room/Room.jsx";
 
 export default class RoomList extends React.Component{
 
@@ -17,9 +18,8 @@ export default class RoomList extends React.Component{
   componentWillMount(){
     var self = this;
     $.ajax({
-            url: 'http://192.168.10.198:3000/getRoomsList',
+            url: 'http://192.168.0.105:3000/getRoomsList',
             success: function(res,status){
-                console.log("success get:",res);
                 self.setState({
                   roomList : res
                 });
@@ -38,12 +38,14 @@ export default class RoomList extends React.Component{
   }
 
   renderRooms(){
-    console.log("renderRooms",this.state.roomList);
-    if(this.state.roomList.length > 0)
+    var self = this;
+    if(self.state.roomList.length > 0)
     {
-      var room_array = this.state.roomList;
+      var room_array = self.state.roomList;
        return room_array.map(function(item,i){
-        return (<div className="roomList-room" key ={i} index={i}>{item.name}</div>);
+        return (
+          <Room key={i} index={i} name={item.name} enterRoom={self.props.enterRoom}/>
+        );
       });
     }
   }
