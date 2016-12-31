@@ -12,6 +12,9 @@ export default class Main extends React.Component{
 
   constructor(props,defaultProps){
     super(props,defaultProps);
+
+    this.props.socket.emit('addUser',{user:sessionStorage.getItem('username')});
+
     this.state = {
       playing:false,
       room : null
@@ -26,6 +29,7 @@ export default class Main extends React.Component{
     });
     hashHistory.push('/Game');
   }
+
 
 
   render(){
@@ -45,7 +49,8 @@ export default class Main extends React.Component{
     return(
       <div className="main-div">
         <div className='main-header'>
-          Tuti-Fruti
+          <div className="title">Tuti-Fruti</div>
+          <div className="username">{sessionStorage.getItem('username')}</div>
         </div>
         <div className='main-body'>
           {childrenWithProps}

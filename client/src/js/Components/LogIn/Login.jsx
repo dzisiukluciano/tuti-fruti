@@ -2,22 +2,45 @@ import React from 'react';
 import Style from './Login.css';
 import Main from '../Main/Main.jsx';
 import { hashHistory } from 'react-router';
+import $ from 'jquery';
 
 export default class Login extends React.Component{
 
-
   handleClick(e){
     let username = document.getElementById('iUser');
-
     if(username.value != '')
     {
-      console.log('username:',username.value);
-      window.sessionStorage.setItem('username',username.value);
-      hashHistory.push("/Main");
+      let usedNames = this.getUsernames();
+      if(usedNames.indexOf(username.value) != -1){
+          alert('That username is alredy in use, please select another');
+      }
+      else{
+        window.sessionStorage.setItem('username',username.value);
+        hashHistory.push("/Main");
+      }
     }
     else {
       username.style.backgroundColor = 'rgba(255,0,0,0.4)';
     }
+  }
+
+  getUsernames(){
+    var names = [];
+    $.ajax({
+            url: 'http://192.168.0.105:3000/getUsernames',
+            success: (res,status)=>{
+              names =  res;
+            },
+            beforeSend:function(){
+              console.log('getting usernames');
+            },
+            error:function(jqXHR,textStatus,Thrown){
+              console.log("error",textStatus,Thrown,jqXHR);
+            },
+            async: false
+          });
+
+      return names;
   }
 
   render(){

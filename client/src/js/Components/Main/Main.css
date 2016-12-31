@@ -18,11 +18,30 @@
   width: 100%;
   background-color: rgba(255,255,255,0.1);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 3em;
   color: white;
+  font-family: 'Arima Madurai', cursive;
+}
+
+.title{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 3em;
+  height: 80%;
+}
+
+.username{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+  font-size: 1em;
   font-family: 'Arima Madurai', cursive;
 }
 

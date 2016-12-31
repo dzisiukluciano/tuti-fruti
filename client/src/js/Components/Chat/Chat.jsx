@@ -25,7 +25,7 @@ export default class Chat extends React.Component{
         message:text,
         user : this.state.user
       }
-      this.state.socket.emit('chat message',event);
+      this.props.socket.emit('chat message',event);
       $('#m').val('');
   }
 
