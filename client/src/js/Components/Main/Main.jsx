@@ -24,17 +24,16 @@ export default class Main extends React.Component{
       room:room,
       playing:true
     });
-    //hashHistory.push('/Game');
+    hashHistory.push('/Game');
   }
 
 
   render(){
     var self = this;
-    var childrenWithProps = React.Children.map(this.props.children, function(child) {
 
-        if(self.state.plaiying){
+    var childrenWithProps = React.Children.map(this.props.children, function(child) {
+        if(self.state.playing){
             //If the player is playing, we the child will be Game.jsx so we pass the respective props
-            console.log('rendering game with correct props');
             return React.cloneElement(child,{socket:self.props.socket , room:self.state.room })
         }
         else{
