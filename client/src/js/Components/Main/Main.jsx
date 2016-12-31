@@ -27,7 +27,7 @@ export default class Main extends React.Component{
       room:room,
       playing:true
     });
-    hashHistory.push('/Game');
+    hashHistory.replace('/Game');
   }
 
 
@@ -46,9 +46,15 @@ export default class Main extends React.Component{
         }
       });
 
+    let room = '';
+      if(this.state.room != null){
+          room = (<div className="room">You are playing in room : {this.state.room}</div>)
+      }
+
     return(
       <div className="main-div">
         <div className='main-header'>
+          {room}
           <div className="title">Tuti-Fruti</div>
           <div className="username">{sessionStorage.getItem('username')}</div>
         </div>

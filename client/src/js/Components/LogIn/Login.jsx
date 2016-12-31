@@ -6,21 +6,24 @@ import $ from 'jquery';
 
 export default class Login extends React.Component{
 
-  handleClick(e){
-    let username = document.getElementById('iUser');
-    if(username.value != '')
-    {
-      let usedNames = this.getUsernames();
-      if(usedNames.indexOf(username.value) != -1){
-          alert('That username is alredy in use, please select another');
+  handleLogIn(e){
+
+    if(e.type == 'click' || (e.type = 'keyup' && e.which == 13)){
+      let username = document.getElementById('iUser');
+      if(username.value != '')
+      {
+        let usedNames = this.getUsernames();
+        if(usedNames.indexOf(username.value) != -1){
+            alert('That username is alredy in use, please select another');
+        }
+        else{
+          window.sessionStorage.setItem('username',username.value);
+          hashHistory.replace("/Main");
+        }
       }
-      else{
-        window.sessionStorage.setItem('username',username.value);
-        hashHistory.push("/Main");
+      else {
+        username.style.backgroundColor = 'rgba(255,0,0,0.4)';
       }
-    }
-    else {
-      username.style.backgroundColor = 'rgba(255,0,0,0.4)';
     }
   }
 
@@ -51,10 +54,10 @@ export default class Login extends React.Component{
             <h2 class="login-form-data-h2">Pick a name</h2>
           </div>
           <div className="login-form-data">
-            <input id='iUser' className="login-form-data-input" type="text"></input>
+            <input id='iUser' className="login-form-data-input" onKeyUp={this.handleLogIn.bind(this)} type="text"></input>
           </div>
           <div className="login-form-data">
-            <button className="login-form-data-button" type="button" onClick={this.handleClick.bind(this)}><strong>GO</strong></button>
+            <button className="login-form-data-button" type="button" onClick={this.handleLogIn.bind(this)}><strong>GO</strong></button>
           </div>
         </div>
       </div>

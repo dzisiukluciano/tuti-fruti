@@ -70,12 +70,13 @@ io.on('connection', function(socket){
   socket.on('addGameRoom',function(msg){
     gameRooms.push(msg);
     console.log("room added");
-    io.emit('updateGameRooms',gameRooms);
+    console.log(msg);
   });
 
   socket.on('removeGameRoom',function(msg){
     gameRooms.slice(1,msg.index);
-    io.emit('updateGameRooms',gameRooms);
+    console.log("room removed");
+    console.log(msg);
   });
 });
 
@@ -88,7 +89,7 @@ server.register(require('inert'),
 
     server.route({
     method: 'GET',
-    path: '/getRoomsList',
+    path: '/getRoomsList/{user}',
     config: {
         cors: {
             origin: ['*'],
@@ -96,7 +97,16 @@ server.register(require('inert'),
         }
     },
     handler: function (request, reply) {
-      reply(gameRooms).code(200);
+      let userFilter = encodeURIComponent(request.params.user)
+      console.log(userFilter);
+      let filteredRooms = [];
+      filteredRooms = gameRooms.map(function(item,i){
+        if(item.admin == userFilter)
+          return item;
+      });
+
+      console.log(filteredRooms);
+      reply(filteredRooms).code(200);
     }
     });
 
