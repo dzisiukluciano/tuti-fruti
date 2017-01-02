@@ -6,37 +6,69 @@ const log = console.log;
 
 const server = new Hapi.Server();
 
+var players = [];
 const gameRooms = [];
+const categories = ["Nombre","Animal","Color","Pais/Provincia/Estado","Cosa","Marca","Comida"];
 
 server.connection({ port:3000 });
 
 var io = require('socket.io')(server.listener);
 
 io.on('connection', function(socket){
-  console.log('user connected');
+  console.log('user connected ');
+
+  socket.on('addUser',function(msg){
+    let player = {
+      name : msg.user,
+      socketId : socket.id
+    };
+    players.push(player);
+    console.log('players: ',players);
+  });
 
   socket.on('disconnect', function(){
-    console.log('user disconnected');
+    let disconnectedId = socket.id;
+    let deleteIndex = null;
+
+    for(var i=0;i<players.length;i++){
+      if(players[i].socketId == disconnectedId){
+        deleteIndex = i;
+        console.log(deleteIndex);
+        break;
+      }
+    }
+    if(deleteIndex != null)
+    players.splice(deleteIndex,1);
+    console.log('players: ',players);
   });
 
   socket.on('chat message', function(msg){
-    console.log('distributing message: ' + msg);
-    io.emit('chat message', msg);
+    console.log("broadcasting message and notification");
+    socket.broadcast.to(msg.room.name).emit('receibe message', msg);
   });
-  socket.on('chat message', function(msg){
-    console.log("broadcast notification");
-    socket.broadcast.emit('alert message',msg);
+
+  socket.on('joinRoom',function(msg){
+    let user = msg.user;
+    console.log(user + ' is joining room ' + msg.room.name);
+    socket.join(msg.room.name);
+  });
+
+  socket.on('something',function(msg){
+    let room = gameRooms[msg.room];
+
+    console.log('something receibed');
+    io.to(room.name).emit('somethingCallback');
   });
 
   socket.on('addGameRoom',function(msg){
+    msg.key = gameRooms.length+1;
     gameRooms.push(msg);
     console.log("room added");
-    io.emit('updateGameRooms',gameRooms);
   });
 
   socket.on('removeGameRoom',function(msg){
     gameRooms.slice(1,msg.index);
-    io.emit('updateGameRooms',gameRooms);
+    console.log("room removed");
   });
 });
 
@@ -49,7 +81,7 @@ server.register(require('inert'),
 
     server.route({
     method: 'GET',
-    path: '/getRoomsList',
+    path: '/getRoomsList/{user}',
     config: {
         cors: {
             origin: ['*'],
@@ -57,13 +89,45 @@ server.register(require('inert'),
         }
     },
     handler: function (request, reply) {
-        //mysqlConnection.query('SELECT ID FROM Users;',function(err,rows,fields){
-            //if(err) throw err;
-            //ids = rows;
-            reply(gameRooms).code(200);
-        //});
+      let userFilter = encodeURIComponent(request.params.user)
+      let filteredRooms = [];
+      filteredRooms = gameRooms.filter(function(item){
+        return item.admin == userFilter;
+      });
+      reply(filteredRooms).code(200);
+    }
+    });
+
+    server.route({
+    method: 'GET',
+    path: '/getCategories',
+    config: {
+        cors: {
+            origin: ['*'],
+            additionalHeaders: ['cache-control', 'x-requested-with']
+        }
+    },
+    handler: function (request, reply) {
+        reply(categories).code(200);
     }
   });
+
+  server.route({
+  method: 'GET',
+  path: '/getUsernames',
+  config: {
+      cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with']
+      }
+  },
+  handler: function (request, reply) {
+      let usernames = players.map(function(item,i){
+        return item.name;
+      });
+      reply(usernames).code(200);
+  }
+});
 
     server.route({
       method: 'GET',

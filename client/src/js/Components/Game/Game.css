@@ -1,0 +1,20 @@
+.game-div{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.gamescreen{
+  height: 100%;
+  width: 80%;
+}
+
+.chatscreen{
+  height: 100%;
+  width: 20%;
+}
