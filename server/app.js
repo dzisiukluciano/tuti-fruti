@@ -8,7 +8,7 @@ const server = new Hapi.Server();
 
 var players = [];
 const gameRooms = [];
-const categories = ["Nombre","Color","Pais/Provincia/Estado","Cosa","Marca","Comida"];
+const categories = ["Nombre","Animal","Color","Pais/Provincia/Estado","Cosa","Marca","Comida"];
 
 server.connection({ port:3000 });
 
@@ -39,25 +39,18 @@ io.on('connection', function(socket){
     }
     if(deleteIndex != null)
     players.splice(deleteIndex,1);
-
     console.log('players: ',players);
   });
 
   socket.on('chat message', function(msg){
-    console.log('distributing message: ' + msg);
-    io.emit('chat message', msg);
-  });
-  socket.on('chat message', function(msg){
-    console.log("broadcast notification");
-    socket.broadcast.emit('alert message',msg);
+    console.log("broadcasting message and notification");
+    socket.broadcast.to(msg.room.name).emit('receibe message', msg);
   });
 
   socket.on('joinRoom',function(msg){
-    console.log("msg",msg);
-    let room = gameRooms[msg.room];
     let user = msg.user;
-    console.log(user + ' is joining room ' +room.name);
-    socket.join(room.name);
+    console.log(user + ' is joining room ' + msg.room.name);
+    socket.join(msg.room.name);
   });
 
   socket.on('something',function(msg){
@@ -68,15 +61,14 @@ io.on('connection', function(socket){
   });
 
   socket.on('addGameRoom',function(msg){
+    msg.key = gameRooms.length+1;
     gameRooms.push(msg);
     console.log("room added");
-    console.log(msg);
   });
 
   socket.on('removeGameRoom',function(msg){
     gameRooms.slice(1,msg.index);
     console.log("room removed");
-    console.log(msg);
   });
 });
 
@@ -98,14 +90,10 @@ server.register(require('inert'),
     },
     handler: function (request, reply) {
       let userFilter = encodeURIComponent(request.params.user)
-      console.log(userFilter);
       let filteredRooms = [];
-      filteredRooms = gameRooms.map(function(item,i){
-        if(item.admin == userFilter)
-          return item;
+      filteredRooms = gameRooms.filter(function(item){
+        return item.admin == userFilter;
       });
-
-      console.log(filteredRooms);
       reply(filteredRooms).code(200);
     }
     });

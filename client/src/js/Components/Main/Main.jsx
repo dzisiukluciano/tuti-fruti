@@ -7,7 +7,7 @@ import { hashHistory } from 'react-router';
 export default class Main extends React.Component{
 
   static defaultProps = {
-      socket : io('http://192.168.0.105:3000'),
+      socket : io('http://192.168.0.103:3000'),
   };
 
   constructor(props,defaultProps){
@@ -22,7 +22,6 @@ export default class Main extends React.Component{
   }
 
   enterRoom(room){
-    console.log("entering room");
     this.setState({
       room:room,
       playing:true
@@ -37,18 +36,18 @@ export default class Main extends React.Component{
 
     var childrenWithProps = React.Children.map(this.props.children, function(child) {
         if(self.state.playing){
-            //If the player is playing, we the child will be Game.jsx so we pass the respective props
+            //Game with props
             return React.cloneElement(child,{socket:self.props.socket , room:self.state.room })
         }
         else{
-          //If the player is not playing, we the child will be RoomList.jsx so we pass the respective props
+          //RoomList with props
           return React.cloneElement(child, { socket: self.props.socket , enterRoom:self.enterRoom.bind(self)});
         }
       });
 
     let room = '';
       if(this.state.room != null){
-          room = (<div className="room">You are playing in room : {this.state.room}</div>)
+          room = (<div className="room">You are playing in room : {this.state.room.name}</div>)
       }
 
     return(

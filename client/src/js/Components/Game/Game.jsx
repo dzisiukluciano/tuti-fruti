@@ -1,4 +1,6 @@
 import React from 'react';
+import Style from './Game.css';
+import Chat from '../Chat/Chat.jsx';
 
 export default class Game extends React.Component{
 
@@ -22,12 +24,15 @@ export default class Game extends React.Component{
 
   render(){
     return(
-      <div>
-        HOLA MUNDO SOY EL FRAME DEL GAME
-        {console.log("socket ",this.props.socket)}
-        {console.log("room ",this.props.room)}
-        {this.joinRoom()}
-        <button onClick={this.emitSomething.bind(this)}>EMIT SOMETHIGN</button>
+      <div className="game-div">
+        <div className="gamescreen">
+          ACA SE RENDERIZA EL CHILD
+          {this.joinRoom()}
+          <button onClick={this.emitSomething.bind(this)}>EMIT SOMETHIGN (NO TOCAR PORQUE CAE EL SERVERS)</button>
+        </div>
+        <div className="chatscreen">
+          <Chat room={this.props.room} socket={this.props.socket}/>
+        </div>
       </div>
     );
   }

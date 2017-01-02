@@ -15,7 +15,7 @@ export default class NewRoomForm extends React.Component{
   componentWillMount(){
     var self = this;
     $.ajax({
-            url: 'http://192.168.0.105:3000/getCategories',
+            url: 'http://192.168.0.103:3000/getCategories',
             success: (res,status)=>{
                   self.setState({
                     categories : res

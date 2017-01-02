@@ -22,8 +22,9 @@ export default class RoomList extends React.Component{
       let user = document.getElementById('iAdmin').value;
       console.log('searching');
       $.ajax({
-              url: 'http://192.168.0.105:3000/getRoomsList/'+user,
+              url: 'http://192.168.0.103:3000/getRoomsList/'+user,
               success: function(res,status){
+                  console.log('res',res);
                   self.setState({
                     roomList : res
                   });
@@ -41,7 +42,7 @@ export default class RoomList extends React.Component{
       var room_array = self.state.roomList;
        return room_array.map(function(item,i){
         return (
-          <Room key={i} index={i} name={item.name} enterRoom={self.props.enterRoom}/>
+          <Room key={item.key} index={item.key} room={item} enterRoom={self.props.enterRoom}/>
         );
       });
     }
@@ -53,7 +54,6 @@ export default class RoomList extends React.Component{
       )
     }
   }
-
 
   closeForm(e){
     this.setState({
