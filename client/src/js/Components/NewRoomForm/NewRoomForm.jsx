@@ -78,6 +78,7 @@ export default class NewRoomForm extends React.Component{
         maxPlayers: maxPlayers,
         categories: categories,
         maxRounds : maxRounds,
+        players : [],
         admin : sessionStorage.getItem('username'),
     });
 

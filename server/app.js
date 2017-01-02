@@ -50,18 +50,13 @@ io.on('connection', function(socket){
   socket.on('joinRoom',function(msg){
     let user = msg.user;
     console.log(user + ' is joining room ' + msg.room.name);
+    gameRooms[msg.room.key].players.push(msg.user);
     socket.join(msg.room.name);
-  });
-
-  socket.on('something',function(msg){
-    let room = gameRooms[msg.room];
-
-    console.log('something receibed');
-    io.to(room.name).emit('somethingCallback');
+    io.to(msg.room.name).emit('playerJoined',gameRooms[msg.room.key]);
   });
 
   socket.on('addGameRoom',function(msg){
-    msg.key = gameRooms.length+1;
+    msg.key = gameRooms.length;
     gameRooms.push(msg);
     console.log("room added");
   });

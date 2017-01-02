@@ -13,8 +13,8 @@ export default class Game extends React.Component{
   }
 
   componentDidMount(){
-    this.props.socket.on('somethingCallback', function(){
-      console.log('something was emitted to this room');
+    this.props.socket.on('playerJoined', function(msg){
+      console.log(msg.players);
     });
   }
 
@@ -26,7 +26,7 @@ export default class Game extends React.Component{
     return(
       <div className="game-div">
         <div className="gamescreen">
-          ACA SE RENDERIZA EL CHILD
+          ACA VA EL CHILD
           {this.joinRoom()}
           <button onClick={this.emitSomething.bind(this)}>EMIT SOMETHIGN (NO TOCAR PORQUE CAE EL SERVERS)</button>
         </div>
