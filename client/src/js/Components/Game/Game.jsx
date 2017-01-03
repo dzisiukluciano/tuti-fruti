@@ -26,9 +26,7 @@ export default class Game extends React.Component{
     return(
       <div className="game-div">
         <div className="gamescreen">
-          ACA VA EL CHILD
           {this.joinRoom()}
-          <button onClick={this.emitSomething.bind(this)}>EMIT SOMETHIGN (NO TOCAR PORQUE CAE EL SERVERS)</button>
         </div>
         <div className="chatscreen">
           <Chat room={this.props.room} socket={this.props.socket}/>

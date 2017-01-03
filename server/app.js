@@ -22,11 +22,23 @@ io.on('connection', function(socket){
       name : msg.user,
       socketId : socket.id
     };
+
+    let playerIndex = -1;
+    for(var i=0;i<players.length;i++){
+      if(players[i].socketId == socket.id){
+        playerIndex = i;
+        break;
+      }
+    }
+    if(playerIndex > -1)
+      players.splice(playerIndex,1);
+
     players.push(player);
     console.log('players: ',players);
   });
 
   socket.on('disconnect', function(){
+    console.log('user disconnected ');
     let disconnectedId = socket.id;
     let deleteIndex = null;
 
@@ -38,21 +50,37 @@ io.on('connection', function(socket){
       }
     }
     if(deleteIndex != null)
-    players.splice(deleteIndex,1);
+      players.splice(deleteIndex,1);
     console.log('players: ',players);
   });
 
   socket.on('chat message', function(msg){
-    console.log("broadcasting message and notification");
+    console.log("chat message");
     socket.broadcast.to(msg.room.name).emit('receibe message', msg);
   });
 
   socket.on('joinRoom',function(msg){
-    let user = msg.user;
-    console.log(user + ' is joining room ' + msg.room.name);
+    console.log(msg.user + ' is joining room ' + msg.room.name);
     gameRooms[msg.room.key].players.push(msg.user);
     socket.join(msg.room.name);
     io.to(msg.room.name).emit('playerJoined',gameRooms[msg.room.key]);
+    console.log('room players: ',gameRooms[msg.room.key].players);
+  });
+
+  socket.on('leaveRoom',function(msg){
+    console.log('leave room');
+      socket.leave(msg.room.name);
+      let playerIndex = -1;
+      for(var i=0;i<gameRooms[msg.room.key].players.length;i++){
+        if(gameRooms[msg.room.key].players[i] == msg.user){
+          playerIndex = i;
+          break;
+        }
+      }
+      if(playerIndex > -1)
+        gameRooms[msg.room.key].players.splice(playerIndex,1);
+      console.log('room players: ',gameRooms[msg.room.key].players);
+
   });
 
   socket.on('addGameRoom',function(msg){

@@ -29,7 +29,25 @@ export default class Main extends React.Component{
     hashHistory.replace('/Game');
   }
 
+  roomSelection(){
+    this.props.socket.emit('leaveRoom',{
+      user : sessionStorage.getItem('username'),
+      room : this.state.room
+    });
+    this.setState({
+      room:null,
+      playing:false,
+    });
+    hashHistory.replace('/RoomList');
+  }
 
+  logout(){
+    this.props.socket.emit('leaveRoom',{
+      user : sessionStorage.getItem('username'),
+      room : this.state.room
+    });
+    hashHistory.replace('/');
+  }
 
   render(){
     var self = this;
@@ -46,15 +64,22 @@ export default class Main extends React.Component{
       });
 
     let room = '';
+    let title = (<div className="title">Tuti-Fruti</div>);
       if(this.state.room != null){
           room = (<div className="room">You are playing in room : {this.state.room.name}</div>)
+          title = (<div className="title">
+                    <button onClick={this.roomSelection.bind(this)} className="btn-roomselection">&#8592; Rooms</button>
+                    Tuti-Fruti
+                    <button onClick={this.logout.bind(this)} className="btn-logout">Log Out</button>
+                  </div>
+                );
       }
 
     return(
       <div className="main-div">
         <div className='main-header'>
           {room}
-          <div className="title">Tuti-Fruti</div>
+          {title}
           <div className="username">{sessionStorage.getItem('username')}</div>
         </div>
         <div className='main-body'>

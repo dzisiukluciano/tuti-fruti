@@ -19,7 +19,7 @@ export default class Login extends React.Component{
         }
         else{
           window.sessionStorage.setItem('username',username.value);
-          hashHistory.replace("/Main");
+          hashHistory.push("/Main");
         }
       }
       else {
