@@ -13,13 +13,15 @@ export default class Game extends React.Component{
   }
 
   componentDidMount(){
-    this.props.socket.on('playerJoined', function(msg){
+    var self = this;
+    this.props.socket.on('playersUpdate', function(msg){
       console.log(msg.players);
     });
-  }
 
-  emitSomething(){
-    this.props.socket.emit('something',{room:this.props.room});
+    this.props.socket.on('admin disconected',function(msg){
+      alert('Oh no, ' +msg.name +', the admin, has lost the connection');
+      self.props.navigateRoomSelection();
+    });
   }
 
   render(){

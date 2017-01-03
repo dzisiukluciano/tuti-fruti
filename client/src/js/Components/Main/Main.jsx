@@ -7,7 +7,7 @@ import { hashHistory } from 'react-router';
 export default class Main extends React.Component{
 
   static defaultProps = {
-      socket : io('http://192.168.0.103:3000'),
+      socket : io('http://192.168.0.104:3000'),
   };
 
   constructor(props,defaultProps){
@@ -29,11 +29,7 @@ export default class Main extends React.Component{
     hashHistory.replace('/Game');
   }
 
-  roomSelection(){
-    this.props.socket.emit('leaveRoom',{
-      user : sessionStorage.getItem('username'),
-      room : this.state.room
-    });
+  navigateRoomSelection(){
     this.setState({
       room:null,
       playing:false,
@@ -41,10 +37,17 @@ export default class Main extends React.Component{
     hashHistory.replace('/RoomList');
   }
 
-  logout(){
+  roomSelection(){
     this.props.socket.emit('leaveRoom',{
       user : sessionStorage.getItem('username'),
       room : this.state.room
+    });
+    this.navigateRoomSelection();
+  }
+
+  logout(){
+    this.props.socket.emit('logout',{
+      user : sessionStorage.getItem('username')
     });
     hashHistory.replace('/');
   }
@@ -55,7 +58,7 @@ export default class Main extends React.Component{
     var childrenWithProps = React.Children.map(this.props.children, function(child) {
         if(self.state.playing){
             //Game with props
-            return React.cloneElement(child,{socket:self.props.socket , room:self.state.room })
+            return React.cloneElement(child,{socket:self.props.socket , room:self.state.room , navigateRoomSelection:self.navigateRoomSelection.bind(self)})
         }
         else{
           //RoomList with props

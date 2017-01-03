@@ -7,51 +7,117 @@ const log = console.log;
 const server = new Hapi.Server();
 
 var players = [];
-const gameRooms = [];
+var gameRooms = [];
 const categories = ["Nombre","Animal","Color","Pais/Provincia/Estado","Cosa","Marca","Comida"];
 
 server.connection({ port:3000 });
 
 var io = require('socket.io')(server.listener);
 
+function removePlayerfromRoom(socket,playerName,room){
+  socket.leave(room.name);
+  let playerIndex = -1;
+  for(var i=0;i<gameRooms[room.key].players.length;i++){
+    if(gameRooms[room.key].players[i] == playerName){
+      playerIndex = i;
+      break;
+    }
+  }
+  if(playerIndex > -1)
+    gameRooms[room.key].players.splice(playerIndex,1);
+
+  io.to(room.name).emit('playersUpdate',gameRooms[room.key]);
+  console.log('room players: ',gameRooms[room.key].players);
+}
+
+function addPlayerToRoom(socket,playerName,room){
+  gameRooms[room.key].players.push(playerName);
+  socket.join(room.name);
+  io.to(room.name).emit('playersUpdate',gameRooms[room.key]);
+  console.log('room players: ',gameRooms[room.key].players);
+}
+
+function addPlayer(socket,playerName){
+  let playerIndex = -1;
+  for(var i=0;i<players.length;i++){
+    if(players[i].socketId == socket.id){
+      playerIndex = i;
+      break;
+    }
+  }
+  if(playerIndex > -1)
+    players.splice(playerIndex,1);
+
+  players.push({
+    name: playerName,
+    socketId : socket.id,
+  });
+  console.log('players: ',players);
+}
+
+function removePlayer(socket,playerName,playerIndex){
+  gameRooms.forEach(function(room,i){
+    //Advise to all administrated rooms by the disconecter player that their admin has been disconnected.
+    if(room.admin == playerName && room.players.length > 0){
+      socket.broadcast.to(room.name).emit('admin disconected',{name:playerName});
+      log('broadcasting admin disconect name: ',playerName);
+    }
+    //The disconected player was playing here
+    if(room.players.indexOf(playerName) > -1)
+      removePlayerfromRoom(socket,playerName,gameRooms[i]);
+  });
+
+
+  gameRooms = gameRooms.filter(function(item){
+    return item.admin != playerName;
+  })
+
+  console.log('remaining gameRooms: ', gameRooms);
+
+  //Remove the player
+  players.splice(playerIndex,1);
+  console.log('remaining global players: ',players);
+}
+
 io.on('connection', function(socket){
   console.log('user connected ');
 
   socket.on('addUser',function(msg){
-    let player = {
-      name : msg.user,
-      socketId : socket.id
-    };
-
-    let playerIndex = -1;
-    for(var i=0;i<players.length;i++){
-      if(players[i].socketId == socket.id){
-        playerIndex = i;
-        break;
-      }
-    }
-    if(playerIndex > -1)
-      players.splice(playerIndex,1);
-
-    players.push(player);
-    console.log('players: ',players);
+    addPlayer(socket,msg.user)
   });
 
   socket.on('disconnect', function(){
     console.log('user disconnected ');
-    let disconnectedId = socket.id;
-    let deleteIndex = null;
 
-    for(var i=0;i<players.length;i++){
-      if(players[i].socketId == disconnectedId){
-        deleteIndex = i;
-        console.log(deleteIndex);
-        break;
-      }
-    }
-    if(deleteIndex != null)
-      players.splice(deleteIndex,1);
-    console.log('players: ',players);
+    let playerName = null;
+    let playerIndex = null;
+
+    //find which player has disconected
+    players.forEach(function(item,i){
+      if(item.socketId == socket.id)
+        {
+          playerName = item.name;
+          playerIndex = i;
+        }
+    });
+    console.log('player disconected: ', playerName);
+
+    removePlayer(socket,playerName,playerIndex);
+
+
+  });
+
+  socket.on('logout',function(msg){
+    let playerIndex = null;
+    //find which player index has disconected
+    players.forEach(function(item,i){
+      if(item.name == msg.user)
+        {
+          playerIndex = i;
+        }
+    });
+    console.log('player logout: ', msg.user);
+    removePlayer(socket,msg.user,playerIndex);
   });
 
   socket.on('chat message', function(msg){
@@ -61,26 +127,12 @@ io.on('connection', function(socket){
 
   socket.on('joinRoom',function(msg){
     console.log(msg.user + ' is joining room ' + msg.room.name);
-    gameRooms[msg.room.key].players.push(msg.user);
-    socket.join(msg.room.name);
-    io.to(msg.room.name).emit('playerJoined',gameRooms[msg.room.key]);
-    console.log('room players: ',gameRooms[msg.room.key].players);
+    addPlayerToRoom(socket,msg.user,msg.room);
   });
 
   socket.on('leaveRoom',function(msg){
     console.log('leave room');
-      socket.leave(msg.room.name);
-      let playerIndex = -1;
-      for(var i=0;i<gameRooms[msg.room.key].players.length;i++){
-        if(gameRooms[msg.room.key].players[i] == msg.user){
-          playerIndex = i;
-          break;
-        }
-      }
-      if(playerIndex > -1)
-        gameRooms[msg.room.key].players.splice(playerIndex,1);
-      console.log('room players: ',gameRooms[msg.room.key].players);
-
+    removePlayerfromRoom(socket,msg.user,msg.room);
   });
 
   socket.on('addGameRoom',function(msg){
