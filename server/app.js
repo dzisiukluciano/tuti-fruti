@@ -139,6 +139,27 @@ io.on('connection', function(socket){
     socket.broadcast.to(msg.room.name).emit('receibe message', msg);
   });
 
+  socket.on('getCategories', function(){
+    console.log("getCategories");
+    if (io.sockets.connected[socket.id]) {
+      io.sockets.connected[socket.id].emit('onCategoriesReceibed',{categories:categories});
+    }
+  });
+
+  socket.on('findRooms', function(msg){
+    console.log("findRooms");
+
+    let userFilter = msg.user;
+    let filteredRooms = [];
+    filteredRooms = gameRooms.filter(function(room){
+      return room.admin == userFilter;
+    });
+
+    if (io.sockets.connected[socket.id]) {
+      io.sockets.connected[socket.id].emit('onRoomsFound',{rooms:filteredRooms});
+    }
+  });
+
 });
 
 //Defining routes
@@ -147,39 +168,6 @@ server.register(require('inert'),
     if (err) {
       throw err;
     }
-
-    server.route({
-    method: 'GET',
-    path: '/getRoomsList/{user}',
-    config: {
-        cors: {
-            origin: ['*'],
-            additionalHeaders: ['cache-control', 'x-requested-with']
-        }
-    },
-    handler: function (request, reply) {
-      let userFilter = encodeURIComponent(request.params.user)
-      let filteredRooms = [];
-      filteredRooms = gameRooms.filter(function(item){
-        return item.admin == userFilter;
-      });
-      reply(filteredRooms).code(200);
-    }
-    });
-
-    server.route({
-    method: 'GET',
-    path: '/getCategories',
-    config: {
-        cors: {
-            origin: ['*'],
-            additionalHeaders: ['cache-control', 'x-requested-with']
-        }
-    },
-    handler: function (request, reply) {
-        reply(categories).code(200);
-    }
-  });
 
   server.route({
   method: 'GET',

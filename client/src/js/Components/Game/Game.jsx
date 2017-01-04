@@ -4,16 +4,33 @@ import Chat from '../Chat/Chat.jsx';
 
 export default class Game extends React.Component{
 
+  constructor(){
+    super();
+    this.state = {
+      players:[]
+    };
+  }
+
+  updatePlayers(msg){
+    console.log('playersUpdate ',msg.players);
+    this.setState({
+                  players:msg.players
+                  });
+  }
+
   componentDidMount(){
     var self = this;
-    this.props.socket.on('playersUpdate', function(msg){
-      console.log(msg.players);
-    });
+    this.props.socket.on('playersUpdate', self.updatePlayers.bind(self));
 
     this.props.socket.on('admin disconected',function(msg){
       alert('Oh no, ' + msg.name +', the admin, has lost the connection');
       self.props.redirectToRoomSelection();
     });
+  }
+
+  componentWillUnmount() {
+    var self = this;
+    this.props.socket.off('playersUpdate');
   }
 
   render(){
@@ -23,7 +40,7 @@ export default class Game extends React.Component{
 
         </div>
         <div className="chatscreen">
-          <Chat room={this.props.room} socket={this.props.socket}/>
+          <Chat players={this.state.players} room={this.props.room} socket={this.props.socket}/>
         </div>
       </div>
     );

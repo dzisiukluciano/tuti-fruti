@@ -12,24 +12,25 @@ export default class SeekRoomForm extends React.Component{
     }
   }
 
+  componentWillMount(){
+    var self = this;
+
+    this.props.socket.on('onRoomsFound',function(msg){
+      console.log('filteredRooms',msg.rooms);
+      self.setState({
+        roomList : msg.rooms
+      });
+    });
+  }
+
   searchRooms(e){
     if(e.which==13)
     {
       var self = this;
       let user = document.getElementById('iAdmin').value;
       console.log('searching');
-      $.ajax({
-              url: 'http://192.168.0.104:3000/getRoomsList/'+user,
-              success: function(res,status){
-                  console.log('res',res);
-                  self.setState({
-                    roomList : res
-                  });
-              },
-              error:function(jqXHR,textStatus,Thrown){
-                console.log("error",textStatus,Thrown,jqXHR);
-              }
-      });
+
+      this.props.socket.emit('findRooms',{user:user});
     }
   }
 

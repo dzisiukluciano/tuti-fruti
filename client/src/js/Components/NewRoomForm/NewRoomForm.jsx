@@ -12,23 +12,23 @@ export default class NewRoomForm extends React.Component{
     }
   }
 
-  componentWillMount(){
-    var self = this;
-    $.ajax({
-            url: 'http://192.168.0.104:3000/getCategories',
-            success: (res,status)=>{
-                  self.setState({
-                    categories : res
-                  });
-            },
-            error:function(jqXHR,textStatus,Thrown){
-              console.log("error",textStatus,Thrown,jqXHR);
-            }
+  loadCategories(msg){
+    this.setState({
+      categories : msg.categories
     });
   }
 
-  close(){
-    this.props.close();
+  componentDidMount(){
+    var self = this;
+
+    this.props.socket.on('onCategoriesReceibed',self.loadCategories.bind(self));
+
+    this.props.socket.emit('getCategories',{});
+  }
+
+  componentWillUnmount() {
+    var self = this;
+    this.props.socket.off('onCategoriesReceibed');
   }
 
   renderCategories(){

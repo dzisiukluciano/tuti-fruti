@@ -44,11 +44,31 @@ export default class Chat extends React.Component{
     }
   }
 
+   getRandomColor() {
+    var letters = '123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 15)];
+    }
+    return color;
+  }
+
   render(){
+    let playerLabels = this.props.players.map((player,i)=>{
+      let color = this.getRandomColor();
+      let style={'background-color': 'rgba(0,0,0,0)','border':'2px solid'+color};
+      return (<label style={style} className="playerlabel" key={i}>{player}</label>)
+    });
+
     return(
     <div className="chat-div">
       <div className="chat-players">
-        <span>Chat with your friends</span>
+        <div className="chat-title">
+          <span>Chat with your friends</span>
+        </div>
+        <div className="playerlabels-div">
+          {playerLabels}
+        </div>
       </div>
       <div id="messages" className="chat-messagebox">
       </div>
