@@ -21,15 +21,44 @@ export default class Main extends React.Component{
     }
   }
 
-  enterRoom(room){
-    this.setState({
-      room:room,
-      playing:true
-    });
-    hashHistory.replace('/Game');
+  componentDidMount(){
+    var self = this;
+
+    this.props.socket.on('onRoomAdded',function(room){
+      console.log('onRoomAdded');
+      self.props.socket.emit('joinRoom',{room:room,
+                                        user:sessionStorage.getItem('username')}
+                            );
+      self.setState({
+        playing:true,
+        room : room
+      });
+      hashHistory.replace('/Game');
+    })
   }
 
-  navigateRoomSelection(){
+  enterRoom(room){
+    if(room != null){
+      this.props.socket.emit('addGameRoom',room);//wait for callback
+    }
+  }
+
+  joinRoom(room){
+    if(room != null){
+      this.props.socket.emit('joinRoom',{
+        user: sessionStorage.getItem('username'),
+        room : room,
+      });
+
+      this.setState({
+        playing:true,
+        room : room
+      });
+      hashHistory.replace('/Game');
+    }
+  }
+
+  redirectToRoomSelection(){
     this.setState({
       room:null,
       playing:false,
@@ -42,7 +71,7 @@ export default class Main extends React.Component{
       user : sessionStorage.getItem('username'),
       room : this.state.room
     });
-    this.navigateRoomSelection();
+    this.redirectToRoomSelection();
   }
 
   logout(){
@@ -58,11 +87,11 @@ export default class Main extends React.Component{
     var childrenWithProps = React.Children.map(this.props.children, function(child) {
         if(self.state.playing){
             //Game with props
-            return React.cloneElement(child,{socket:self.props.socket , room:self.state.room , navigateRoomSelection:self.navigateRoomSelection.bind(self)})
+            return React.cloneElement(child,{socket:self.props.socket , room:self.state.room , redirectToRoomSelection:self.redirectToRoomSelection.bind(self)})
         }
         else{
           //RoomList with props
-          return React.cloneElement(child, { socket: self.props.socket , enterRoom:self.enterRoom.bind(self)});
+          return React.cloneElement(child, { socket: self.props.socket , enterRoom:self.enterRoom.bind(self), joinRoom:self.joinRoom.bind(self)});
         }
       });
 

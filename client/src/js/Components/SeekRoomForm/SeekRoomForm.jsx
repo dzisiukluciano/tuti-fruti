@@ -1,6 +1,7 @@
 import React from 'react';
 import Style from './SeekRoomForm.css';
 import $ from 'jquery';
+import Room from '../Room/Room.jsx';
 
 export default class SeekRoomForm extends React.Component{
 
@@ -38,7 +39,7 @@ export default class SeekRoomForm extends React.Component{
       var room_array = self.state.roomList;
        return room_array.map(function(item,i){
         return (
-          <Room key={item.key} index={item.key} room={item} enterRoom={self.props.enterRoom}/>
+          <Room key={item.key} index={item.key} room={item} joinRoom={self.props.joinRoom}/>
         );
       });
     }

@@ -54,6 +54,7 @@ export default class NewRoomForm extends React.Component{
   }
 
   handleClick(e){
+    let room = null;
     let name = document.getElementById('iName').value;
     let maxPlayers = document.getElementById('iPlayers').value;
     let maxRounds = document.getElementById('iRounds').value;
@@ -73,16 +74,16 @@ export default class NewRoomForm extends React.Component{
 
     if(validated)
     {
-      this.props.socket.emit('addGameRoom',{
+        room = {
         name: name,
         maxPlayers: maxPlayers,
         categories: categories,
         maxRounds : maxRounds,
         players : [],
         admin : sessionStorage.getItem('username'),
-    });
+    }
 
-      this.close();
+    this.props.enterRoom(room);
     }
   }
 
@@ -91,7 +92,7 @@ export default class NewRoomForm extends React.Component{
       <div className="newRoomForm">
         <div className="form-line">
           <div className="form-label">
-              <label className="">Name</label>
+              <label>Name</label>
           </div>
           <div className="form-input">
               <input id='iName' className="form-text-input" type="text"></input>
@@ -99,7 +100,7 @@ export default class NewRoomForm extends React.Component{
         </div>
         <div className="form-line">
           <div className="form-label">
-              <label className="">Max players</label>
+              <label>Max players</label>
           </div>
           <div className="form-input">
             <div className="combo-style">
@@ -114,7 +115,7 @@ export default class NewRoomForm extends React.Component{
         </div>
         <div className="form-line">
             <div className="form-label">
-                <label className="">Max rounds</label>
+                <label>Max rounds</label>
             </div>
             <div className="form-input">
               <div className="combo-style">
@@ -131,13 +132,14 @@ export default class NewRoomForm extends React.Component{
         </div>
         <div className="form-line">
             <div className="form-label">
-                <label className="">Categories</label>
+                <label>Categories</label>
             </div>
-            <div className="">
-              <div id="categoriesList" class="container">
+            <div id="categoriesList" className="categoriesList">
                 {this.renderCategories()}
-              </div>
-              <input id='cbAll' type="checkbox" onChange={this.handleChange.bind(this)} />All
+            </div>
+            <div className="allCategories">
+              <input id='cbAll' type="checkbox" onChange={this.handleChange.bind(this)} />
+              <label for="cbAll">All</label>
             </div>
         </div>
         <div className="form-line">

@@ -12,10 +12,10 @@ export default class RoomList extends React.Component{
     return(
       <div className="roomList">
         <div className="newArea">
-          <NewRoomForm/>
+          <NewRoomForm enterRoom={this.props.enterRoom}/>
         </div>
         <div className="seekArea">
-          <SeekRoomForm />
+          <SeekRoomForm joinRoom={this.props.joinRoom} />
         </div>
       </div>
     )

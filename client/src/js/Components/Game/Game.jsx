@@ -4,14 +4,6 @@ import Chat from '../Chat/Chat.jsx';
 
 export default class Game extends React.Component{
 
-  joinRoom(){
-    let msg = {
-      user : window.sessionStorage.getItem('username'),
-      room : this.props.room
-    }
-    this.props.socket.emit('joinRoom',msg);
-  }
-
   componentDidMount(){
     var self = this;
     this.props.socket.on('playersUpdate', function(msg){
@@ -19,8 +11,8 @@ export default class Game extends React.Component{
     });
 
     this.props.socket.on('admin disconected',function(msg){
-      alert('Oh no, ' +msg.name +', the admin, has lost the connection');
-      self.props.navigateRoomSelection();
+      alert('Oh no, ' + msg.name +', the admin, has lost the connection');
+      self.props.redirectToRoomSelection();
     });
   }
 
@@ -28,7 +20,7 @@ export default class Game extends React.Component{
     return(
       <div className="game-div">
         <div className="gamescreen">
-          {this.joinRoom()}
+
         </div>
         <div className="chatscreen">
           <Chat room={this.props.room} socket={this.props.socket}/>
