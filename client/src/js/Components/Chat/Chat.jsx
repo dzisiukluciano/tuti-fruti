@@ -24,6 +24,10 @@ export default class Chat extends React.Component{
 
   }
 
+  componentWillUnmount(){
+    this.props.socket.off('receibe message');
+  }
+
   sendMessage(e){
     if(e.type == 'click' || (e.type = 'keyup' && e.which == 13) ){
       let text = $('#m').val();
@@ -56,7 +60,7 @@ export default class Chat extends React.Component{
   render(){
     let playerLabels = this.props.players.map((player,i)=>{
       let color = this.getRandomColor();
-      let style={'background-color': 'rgba(0,0,0,0)','border':'2px solid'+color};
+      let style={'backgroundColor': 'rgba(0,0,0,0)','border':'2px solid'+color};
       return (<label style={style} className="playerlabel" key={i}>{player}</label>)
     });
 

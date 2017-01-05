@@ -23,6 +23,12 @@ export default class SeekRoomForm extends React.Component{
     });
   }
 
+
+  componentWillUnmount() {
+    var self = this;
+    this.props.socket.off('onRoomsFound');
+  }
+
   searchRooms(e){
     if(e.which==13)
     {

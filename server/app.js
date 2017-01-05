@@ -116,24 +116,6 @@ io.on('connection', function(socket){
     removePlayer(socket,msg.user);
   });
 
-
-  socket.on('logout',function(msg){
-    let playerName = msg.user;
-    let playerIndex = null;
-    console.log('player logout: ', playerName);
-
-    players.forEach(function(player,i){
-      if(player.name == playerName)
-        playerIndex = i;
-    });
-
-    removePlayer(socket,playerName);
-    //Remove the player
-    if(playerIndex != null)
-      players.splice(playerIndex,1);
-    console.log('remaining global players: ',players);
-  });
-
   socket.on('chat message', function(msg){
     console.log("chat message");
     socket.broadcast.to(msg.room.name).emit('receibe message', msg);

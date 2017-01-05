@@ -7,17 +7,17 @@ import { hashHistory } from 'react-router';
 export default class Main extends React.Component{
 
   static defaultProps = {
-      socket : io('http://192.168.0.104:3000'),
+      socket : io('http://192.168.0.106:3000'),
   };
 
   constructor(props,defaultProps){
     super(props,defaultProps);
-
+    this.props.socket.connect();
     this.props.socket.emit('addUser',{user:sessionStorage.getItem('username')});
 
     this.state = {
       playing:false,
-      room : null
+      room : null,
     }
   }
 
@@ -34,7 +34,11 @@ export default class Main extends React.Component{
         room : room
       });
       hashHistory.replace('/Game');
-    })
+    });
+  }
+
+  componentWillUnmount(){
+    this.props.socket.off('onRoomAdded');
   }
 
   enterRoom(room){
@@ -59,11 +63,13 @@ export default class Main extends React.Component{
   }
 
   redirectToRoomSelection(){
+    console.log('redirectToRoomSelection');
     this.setState({
       room:null,
       playing:false,
     });
     hashHistory.replace('/RoomList');
+    console.log('redirectToRoomSelection OK');
   }
 
   roomSelection(){
@@ -75,9 +81,7 @@ export default class Main extends React.Component{
   }
 
   logout(){
-    this.props.socket.emit('logout',{
-      user : sessionStorage.getItem('username')
-    });
+    this.props.socket.disconnect();
     hashHistory.replace('/');
   }
 

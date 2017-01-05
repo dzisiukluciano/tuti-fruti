@@ -19,11 +19,7 @@ export default class Layout extends React.Component{
       <Route path="/Main" component={Main}>
         <IndexRoute component={RoomList}></IndexRoute>
         <Route path="/RoomList" component={RoomList}></Route>
-        <Route path="/Game" component={Game}>
-          <IndexRoute component={Round}></IndexRoute>
-          <Route path="/Round" component={Round}></Route>
-          <Route path="/Points" component={Points}></Route>
-        </Route>
+        <Route path="/Game" component={Game}></Route>
       </Route>
     </Router>
     );

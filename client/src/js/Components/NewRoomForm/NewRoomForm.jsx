@@ -13,6 +13,7 @@ export default class NewRoomForm extends React.Component{
   }
 
   loadCategories(msg){
+    console.log('got categories');
     this.setState({
       categories : msg.categories
     });
@@ -22,7 +23,7 @@ export default class NewRoomForm extends React.Component{
     var self = this;
 
     this.props.socket.on('onCategoriesReceibed',self.loadCategories.bind(self));
-
+    console.log('getting categories');
     this.props.socket.emit('getCategories',{});
   }
 
@@ -37,7 +38,7 @@ export default class NewRoomForm extends React.Component{
       var categories_array = this.state.categories;
        return categories_array.map(function(item,i){
         return (
-          <div className="categorie">
+          <div key={i} className="categorie">
             <input type="checkbox" key={i} index={i} value={item}/>{item}
           </div>
         );
