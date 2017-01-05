@@ -15,10 +15,19 @@ server.connection({ port:3000 });
 var io = require('socket.io')(server.listener);
 
 function addPlayerToRoom(socket,playerName,room){
-  gameRooms[room.key].players.push(playerName);
-  socket.join(room.name);
-  io.to(room.name).emit('playersUpdate',gameRooms[room.key]);
-  console.log('room players: ',gameRooms[room.key].players);
+  let playerObject = null;
+  players.forEach(function(player,i){
+    if(player.name == playerName){
+      playerObject = player;
+    }
+  })
+
+  if(playerObject != null){
+    gameRooms[room.key].players.push(playerObject);
+    socket.join(room.name);
+    io.to(room.name).emit('playersUpdate',gameRooms[room.key]);
+    console.log('room players: ',gameRooms[room.key].players);
+  }
 }
 
 function addPlayer(socket,playerName){
@@ -35,6 +44,7 @@ function addPlayer(socket,playerName){
   players.push({
     name: playerName,
     socketId : socket.id,
+    state : 'waiting',
   });
   console.log('players: ',players);
 }
@@ -114,6 +124,33 @@ io.on('connection', function(socket){
   socket.on('leaveRoom',function(msg){
     console.log('leave room');
     removePlayer(socket,msg.user);
+  });
+
+  socket.on('setWaitingFinished',function(msg){
+    let user = msg.user;
+    let room = msg.room;
+
+    gameRooms[room.key].players.forEach(function(player,i){
+      if(player.name == user){
+          player.state = 'letter';
+      }
+    });
+
+    console.log(msg.user,' finished waiting in room ', msg.room.name);
+    io.sockets.in(msg.room.name).emit('playersUpdate',gameRooms[room.key]);
+
+    let everybodyFinishedWaiting = true;
+    gameRooms[room.key].players.forEach(function(player,i){
+        if(player.state != 'letter'){
+          everybodyFinishedWaiting = false;
+        }
+    });
+
+    if(everybodyFinishedWaiting){
+      io.sockets.in(msg.room.name).emit('everybodyFinishedWaiting',{});
+    }
+
+
   });
 
   socket.on('chat message', function(msg){

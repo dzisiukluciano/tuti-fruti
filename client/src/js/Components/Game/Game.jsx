@@ -12,7 +12,7 @@ export default class Game extends React.Component{
     super();
     this.state = {
       phase: 'waiting',
-      players:[]
+      players:[],
     };
   }
 
@@ -45,7 +45,7 @@ export default class Game extends React.Component{
     let renderState;
     switch(this.state.phase){
       case('waiting') :
-        renderState = (<Waiting/>);
+        renderState = (<Waiting socket={this.props.socket} room={this.props.room} players={this.state.players} />);
         break;
       case('letter') :
         renderState = (<Letter/>);
