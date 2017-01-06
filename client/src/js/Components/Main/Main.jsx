@@ -8,6 +8,7 @@ export default class Main extends React.Component{
 
   static defaultProps = {
       socket : io('http://192.168.0.106:3000'),
+      alphabet : 'abcdefghijklmnopqrstuvwxyz'.split(''),
   };
 
   constructor(props,defaultProps){
@@ -35,10 +36,30 @@ export default class Main extends React.Component{
       });
       hashHistory.replace('/Game');
     });
+
+    self.props.socket.on('onRoomFull',function(){
+      alert('Oh no, this room is full, try in another');
+    });
+
+    self.props.socket.on('onRoomStarted',function(){
+      alert('Oops, the game has alredy started in this room, try in another');
+    });
+
+    self.props.socket.on('onJoinOk',function(msg){
+      self.setState({
+        playing:true,
+        room : msg.room
+      });
+      hashHistory.replace('/Game');
+    })
+
   }
 
   componentWillUnmount(){
     this.props.socket.off('onRoomAdded');
+    this.props.socket.off('onRoomFull');
+    this.props.socket.off('onRoomStarted');
+    this.props.socket.off('onJoinOk');
   }
 
   enterRoom(room){
@@ -53,12 +74,6 @@ export default class Main extends React.Component{
         user: sessionStorage.getItem('username'),
         room : room,
       });
-
-      this.setState({
-        playing:true,
-        room : room
-      });
-      hashHistory.replace('/Game');
     }
   }
 
@@ -85,13 +100,22 @@ export default class Main extends React.Component{
     hashHistory.replace('/');
   }
 
+  startGame(){
+    let room = this.state.room;
+    room.state = 'started';
+
+    this.setState({room:room});
+    this.props.socket.emit('roomStarted',{room:room});
+
+  }
+
   render(){
     var self = this;
 
     var childrenWithProps = React.Children.map(this.props.children, function(child) {
         if(self.state.playing){
             //Game with props
-            return React.cloneElement(child,{socket:self.props.socket , room:self.state.room , redirectToRoomSelection:self.redirectToRoomSelection.bind(self)})
+            return React.cloneElement(child,{socket:self.props.socket , alphabet:self.props.alphabet , room:self.state.room , redirectToRoomSelection:self.redirectToRoomSelection.bind(self) , startGame:self.startGame.bind(self)})
         }
         else{
           //RoomList with props

@@ -13,7 +13,15 @@ export default class Game extends React.Component{
     this.state = {
       phase: 'waiting',
       players:[],
+      alphabet : null,
+      actualLetter : null,
     };
+  }
+
+  componentWillReceiveProps(){
+    this.setState({
+      alphabet : this.props.alphabet,
+    });
   }
 
   componentDidMount(){
@@ -40,15 +48,28 @@ export default class Game extends React.Component{
    console.log('playersUpdate OK');
   }
 
-  render(){
+  setLetterState(){
+    console.log('alphabet after ',this.state.alphabet);
+    let random = Math.floor(Math.random() * (this.state.alphabet.length - 1 + 1)) + 1;
+    let actualLetter = this.state.alphabet[random];
+    let alphabet = this.state.alphabet;
+    alphabet.splice(random,1);
+    this.setState({
+      alphabet : alphabet,
+      actualLetter:actualLetter,
+      phase:'letter',
+    });
+    console.log('alphabet before ',this.state.alphabet);
+  }
 
+  render(){
     let renderState;
     switch(this.state.phase){
       case('waiting') :
-        renderState = (<Waiting socket={this.props.socket} room={this.props.room} players={this.state.players} />);
+        renderState = (<Waiting socket={this.props.socket} endPhase={this.setLetterState.bind(this)} room={this.props.room} players={this.state.players} startGame={this.props.startGame} />);
         break;
       case('letter') :
-        renderState = (<Letter/>);
+        renderState = (<Letter letter={this.state.actualLetter}/>);
         break;
       case('round') :
         renderState = (<Round/>);

@@ -8,8 +8,11 @@ export default class Waiting extends React.Component{
   }
 
   componentDidMount(){
-    this.props.socket.on('everybodyFinishedWaiting',function(){
+    var self = this;
+    self.props.socket.on('everybodyFinishedWaiting',function(){
       console.log('everybody finished waiting');
+      self.props.startGame();
+      self.props.endPhase();
     });
   }
 
@@ -27,18 +30,28 @@ export default class Waiting extends React.Component{
   render(){
 
     let playerStates =   this.props.players.map(function(player,i){
-                          console.log('rendering waiting: ',player.name,'state: ', player.state);
-                            return (
-                              <div key={i}>
-                                <div>{player.name} {player.state}</div>
-                              </div>
+                          let stateClass = 'player-state-state'
+                          if(player.state != 'waiting')
+                            stateClass = 'player-state-state ready'
+
+                          return (
+                            <div className="player-state" key={i}>
+                              <div className="player-state-name">{player.name}</div>
+                              <div className={stateClass}></div>
+                            </div>
                             );
                           });
 
     return(
       <div className="waiting-div">
-        {playerStates}
-        <button onClick={this.setWaitingFinished.bind(this)}>SET WAITINGFINISHED</button>
+        <div className="waiting-title">
+          <div className="title-text"><h1>If all you friends are in...</h1></div>
+          <div className="title-text"> <p>(If the game starts no more players are admited)</p></div>
+          <button className="btn-finish-waiting" onClick={this.setWaitingFinished.bind(this)}>GO</button>
+        </div>
+        <div className="states">
+          {playerStates}
+        </div>
     </div>
     );
   }

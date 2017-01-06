@@ -60,6 +60,7 @@ export default class NewRoomForm extends React.Component{
     let maxPlayers = document.getElementById('iPlayers').value;
     let maxRounds = document.getElementById('iRounds').value;
     let categories = [];
+    let state = 'creacted';
 
     var categoriesCheckboxes = document.getElementById("categoriesList").getElementsByTagName("input");
     for(var i=0;i < categoriesCheckboxes.length; i++){

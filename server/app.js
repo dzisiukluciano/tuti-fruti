@@ -22,9 +22,24 @@ function addPlayerToRoom(socket,playerName,room){
     }
   })
 
-  if(playerObject != null){
+  if(gameRooms[room.key].players.length == gameRooms[room.key].maxPlayers){
+    if (io.sockets.connected[socket.id]){
+      io.sockets.connected[socket.id].emit('onRoomFull',{});
+    }
+  }
+  else if(gameRooms[room.key].state == 'started'){
+    if (io.sockets.connected[socket.id]){
+      console.log('emiiting onRoomStarted');
+      io.sockets.connected[socket.id].emit('onRoomStarted',{room:room});
+      }
+  }
+  else if(playerObject != null){
     gameRooms[room.key].players.push(playerObject);
     socket.join(room.name);
+    if (io.sockets.connected[socket.id]){
+      console.log('emiiting onJoinOk');
+      io.sockets.connected[socket.id].emit('onJoinOk',{room:room});
+      }
     io.to(room.name).emit('playersUpdate',gameRooms[room.key]);
     console.log('room players: ',gameRooms[room.key].players);
   }
@@ -57,8 +72,11 @@ function removePlayer(socket,playerName){
         log('broadcasting admin disconect name: ',playerName);
       }
       //The disconected player was playing here and its not the admin
-      if(room.players.indexOf(playerName) > -1)
-        removePlayerfromRoom(socket,playerName,room);
+      room.players.forEach(function(player,i){
+        if(player.name == playerName){
+          removePlayerfromRoom(socket,playerName,room);
+        }
+      });
     });
 
     //Delete the rooms where the user who logged out was the admin
@@ -71,8 +89,8 @@ function removePlayer(socket,playerName){
 function removePlayerfromRoom(socket,playerName,room){
   socket.leave(room.name);
   let playerIndex = -1;
-  gameRooms[room.key].players.forEach(function(player,i){
-    if(player == playerName)
+  room.players.forEach(function(player,i){
+    if(player.name == playerName)
       playerIndex = i;
   });
 
@@ -126,6 +144,11 @@ io.on('connection', function(socket){
     removePlayer(socket,msg.user);
   });
 
+  socket.on('roomStarted',function(msg){
+    let room = msg.room;
+    gameRooms[room.key].state = room.state;
+  });
+
   socket.on('setWaitingFinished',function(msg){
     let user = msg.user;
     let room = msg.room;
@@ -142,11 +165,12 @@ io.on('connection', function(socket){
     let everybodyFinishedWaiting = true;
     gameRooms[room.key].players.forEach(function(player,i){
         if(player.state != 'letter'){
+          log(player.name,' didnt finished waiting');
           everybodyFinishedWaiting = false;
         }
     });
 
-    if(everybodyFinishedWaiting){
+    if(everybodyFinishedWaiting && gameRooms[room.key].players.length > 1){
       io.sockets.in(msg.room.name).emit('everybodyFinishedWaiting',{});
     }
 
