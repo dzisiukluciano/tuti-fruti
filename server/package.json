@@ -1,10 +1,11 @@
 {
-  "name": "sse-tuto",
+  "name": "tuti-fruti-server",
   "version": "0.0.1",
-  "description": "Tutorial of server sent events",
+  "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "author": "Sebastian Gonzalez",
   "license": "MIT",
@@ -12,6 +13,14 @@
     "chalk": "^1.1.3",
     "hapi": "^16.0.1",
     "inert": "^4.0.3",
-    "socket.io": "^1.7.2"
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "webpack": "^2.3.2"
   }
 }
