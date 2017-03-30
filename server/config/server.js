@@ -1,6 +1,6 @@
-server = {
-  'host': 'localhost',
-  'port':'3000'
+const server = {
+  host: 'localhost',
+  port: { port: 3000},
 };
 
-module.exports = server;
+export default server;

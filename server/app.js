@@ -1,23 +1,25 @@
 
-import io from 'socket.io-client/dist/socket.io';
-//var io = require('socket.io')(server.listener);
 
-import Server from './config/server';
-console.log(Server);
+import socketio from 'socket.io';
+
+import serverConfig from './config/server';
 
 'use strict';
 
 const Hapi = require('hapi');
 const chalk = require ('chalk');
 const log = console.log;
+console.log(serverConfig);
 
 const server = new Hapi.Server();
+server.connection(serverConfig.port);
+
+const io = socketio(server.listener);
 
 var players = [];
 var gameRooms = [];
 const categories = ["Nombre","Animal","Color","Pais/Provincia/Estado","Cosa","Marca","Comida"];
 
-server.connection({ port:3000 });
 
 function addPlayerToRoom(socket,playerName,room){
   let playerObject = null;

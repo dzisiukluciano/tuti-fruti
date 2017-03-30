@@ -10,11 +10,10 @@ module.exports = {
     loaders: [
       {
         test: /\.js?$/,
-        exclude: /(node_modules|bower_components)/,
+        exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015', 'stage-0'],
-          plugins: [],
+          presets: ['es2015', 'stage-0'],          
         }
       }
     ],
@@ -22,11 +21,5 @@ module.exports = {
   output: {
     path: __dirname + "/build/",
     filename: "app_bundle.js"
-  },
-  resolve: { alias: { 'socket.io-client': path.join( __dirname, 'node_modules', 'socket.io-client', 'socket.io.js' ) } },
-  plugins: debug ? [] : [
-    // new webpack.optimize.DedupePlugin(),
-    // new webpack.optimize.OccurenceOrderPlugin(),
-    // new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-  ],
+  },  
 };
