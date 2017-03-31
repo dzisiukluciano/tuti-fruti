@@ -1,19 +1,42 @@
 'use strict';
+
+//Libs
 import socketio from 'socket.io';
 import Config from './config/config';
 import Hapi from 'hapi';
 import chalk from 'chalk';
 
+
+//Initialize server & socket
 const server = new Hapi.Server();
 server.connection(Config.port);
-
 const io = socketio(server.listener);
+server.start(
+  (err) => {
+    if (err)
+      throw err;
+
+    console.log(`${chalk.yellow('Tuti-Fruti server running at:')} ${chalk.green(server.info.uri)}`);
+  }
+);
+
+
+//Components
+import Categories from './components/Categories';
+import TutiFruti from './components/TutiFruti';
+import Game from './components/Game';
+import Round from './components/Round';
+import Player from './components/Player';
+
+console.log(Categories[0]);
+
+
+
+
 
 var players = [];
 var gameRooms = [];
-const categories = ["Nombre","Animal","Color","Pais/Provincia/Estado","Cosa","Marca","Comida"];
-
-
+/*
 function addPlayerToRoom(socket,playerName,room){
   let playerObject = null;
   players.forEach(function(player,i){
@@ -100,6 +123,7 @@ function removePlayerfromRoom(socket,playerName,room){
   io.to(room.name).emit('playersUpdate',gameRooms[room.key]);
   console.log('room players: ',gameRooms[room.key].players);
 }
+*/
 
 io.on('connection', function(socket){
   console.log('user connected ');
@@ -239,15 +263,5 @@ server.register(require('inert'),
        },
       }
     });
-  }
-);
-
-//Starting the server
-server.start(
-  (err) => {
-    if (err)
-      throw err;
-
-    console.log(`${chalk.yellow('Tuti-Fruti server running at:')} ${chalk.green(server.info.uri)}`);
   }
 );
