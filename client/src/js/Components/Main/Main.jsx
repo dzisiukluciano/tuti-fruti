@@ -7,7 +7,7 @@ import { hashHistory } from 'react-router';
 export default class Main extends React.Component{
 
   static defaultProps = {
-      socket : io('http://192.168.0.106:3000'),
+      socket : io('http://localhost:3000'),
       alphabet : 'abcdefghijklmnopqrstuvwxyz'.split(''),
   };
 
