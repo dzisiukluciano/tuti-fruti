@@ -1,18 +1,11 @@
-
-
-import socketio from 'socket.io';
-
-import serverConfig from './config/server';
-
 'use strict';
-
-const Hapi = require('hapi');
-const chalk = require ('chalk');
-const log = console.log;
-console.log(serverConfig);
+import socketio from 'socket.io';
+import Config from './config/config';
+import Hapi from 'hapi';
+import chalk from 'chalk';
 
 const server = new Hapi.Server();
-server.connection(serverConfig.port);
+server.connection(Config.port);
 
 const io = socketio(server.listener);
 
@@ -76,7 +69,7 @@ function removePlayer(socket,playerName){
       //Advise to all administrated rooms by the disconecter player that their admin has been disconnected.
       if(room.admin == playerName && room.players.length > 0){
         socket.broadcast.to(room.name).emit('admin disconected',{name:playerName});
-        log('broadcasting admin disconect name: ',playerName);
+        console.log('broadcasting admin disconect name: ',playerName);
       }
       //The disconected player was playing here and its not the admin
       room.players.forEach(function(player,i){
@@ -172,7 +165,7 @@ io.on('connection', function(socket){
     let everybodyFinishedWaiting = true;
     gameRooms[room.key].players.forEach(function(player,i){
         if(player.state != 'letter'){
-          log(player.name,' didnt finished waiting');
+          console.log(player.name,' didnt finished waiting');
           everybodyFinishedWaiting = false;
         }
     });
@@ -255,6 +248,6 @@ server.start(
     if (err)
       throw err;
 
-    log(`${chalk.yellow('Tuti-Fruti server running at:')} ${chalk.green(server.info.uri)}`);
+    console.log(`${chalk.yellow('Tuti-Fruti server running at:')} ${chalk.green(server.info.uri)}`);
   }
 );
