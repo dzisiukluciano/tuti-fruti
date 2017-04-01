@@ -8,7 +8,7 @@ import chalk from 'chalk';
 
 //Initialize socket server
 const server = new Hapi.Server();
-server.connection(Config.port);
+server.connection(Config.server.port);
 
 server.start(
   (err) => {

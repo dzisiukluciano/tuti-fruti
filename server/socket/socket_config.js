@@ -4,7 +4,7 @@ import socketEvents from './socket_events';
 
 
 const socket_config = {
-  initialize : function(listener){
+  initialize : (listener) => {
     let io = socketio(listener);
     socketEvents.bind(io);
     console.log(`${chalk.green('Socket initialized')}`);
