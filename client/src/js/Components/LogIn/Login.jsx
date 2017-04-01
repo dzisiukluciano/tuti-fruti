@@ -31,7 +31,7 @@ export default class Login extends React.Component{
   getUsernames(){
     var names = [];
     $.ajax({
-            url: 'http://192.168.0.106:3000/getUsernames',
+            url: 'http://localhost:3000/getUsernames',
             success: (res,status)=>{
               names =  res;
             },
