@@ -4,7 +4,7 @@ import Style from './Room.css';
 export default class Room extends React.Component{
 
   handleCLick(){
-    this.props.enterRoom(this.props.room);
+    this.props.joinRoom(this.props.room);
   }
 
   render(){

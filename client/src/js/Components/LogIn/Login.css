@@ -28,6 +28,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3232', end
 }
 .login-form-data-h2{
    color: rgba(255,255,255,0.7);
+   font-family: 'Arima Madurai', cursive;
    font-style: oblique;
 }
 .login-form-data-input{
@@ -37,9 +38,41 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3232', end
   width: 80%;
   font-weight: bold;
 }
-.login-form-data-button{
-  font-style: italic;
-  border-radius: 0 0 15px 15px;
-  width: 80%;
-  height: 40%;
+
+.login-form-data-button {
+  font-family: 'Calibri';
+  width: 100%;
+  height: 80%;
+  font-size: 100%;
+	-moz-box-shadow: 0px 1px 7px 0px #3dc21b;
+	-webkit-box-shadow: 0px 1px 7px 0px #3dc21b;
+	box-shadow: 0px 1px 7px 0px #3dc21b;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #44c767), color-stop(1, #5cbf2a));
+	background:-moz-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+	background:-webkit-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+	background:-o-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+	background:-ms-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#44c767', endColorstr='#5cbf2a',GradientType=0);
+	background-color:#44c767;
+	-moz-border-radius:27px;
+	-webkit-border-radius:27px;
+	border-radius:10px;
+	border:3px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	text-decoration:none;
+	text-shadow:0px 3px 7px #18610d;
+}
+.login-form-data-button:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cbf2a), color-stop(1, #44c767));
+	background:-moz-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
+	background:-webkit-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
+	background:-o-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
+	background:-ms-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
+	background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cbf2a', endColorstr='#44c767',GradientType=0);
+	background-color:#5cbf2a;
+  text-shadow: 2px 1px #000;
 }

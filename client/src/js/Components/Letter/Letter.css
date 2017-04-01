@@ -1,4 +1,4 @@
-.roomList{
+.letter-div{
   height: 100%;
   width: 100%;
   display: flex;
@@ -7,18 +7,14 @@
   justify-content: center;
 }
 
-.seekArea{
-  height: 100%;
-  width: 30%;
-}
-
-.newArea{
-  width: 70%;
-  height: 100%;
+.letter-roullette{
+  height: 90%;
+  width: 90%;
+  border-radius: 50%;
+  background-color: rgba(255,255,255,0.3);
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  box-sizing:border-box;
-  margin: 0px 20px;
+  align-items: center;
+  font-size: 28vw;
 }

@@ -12,23 +12,24 @@ export default class NewRoomForm extends React.Component{
     }
   }
 
-  componentWillMount(){
-    var self = this;
-    $.ajax({
-            url: 'http://192.168.0.103:3000/getCategories',
-            success: (res,status)=>{
-                  self.setState({
-                    categories : res
-                  });
-            },
-            error:function(jqXHR,textStatus,Thrown){
-              console.log("error",textStatus,Thrown,jqXHR);
-            }
+  loadCategories(msg){
+    console.log('got categories');
+    this.setState({
+      categories : msg.categories
     });
   }
 
-  close(){
-    this.props.close();
+  componentDidMount(){
+    var self = this;
+
+    this.props.socket.on('onCategoriesReceibed',self.loadCategories.bind(self));
+    console.log('getting categories');
+    this.props.socket.emit('getCategories',{});
+  }
+
+  componentWillUnmount() {
+    var self = this;
+    this.props.socket.off('onCategoriesReceibed');
   }
 
   renderCategories(){
@@ -37,7 +38,7 @@ export default class NewRoomForm extends React.Component{
       var categories_array = this.state.categories;
        return categories_array.map(function(item,i){
         return (
-          <div className="categorie">
+          <div key={i} className="categorie">
             <input type="checkbox" key={i} index={i} value={item}/>{item}
           </div>
         );
@@ -54,10 +55,12 @@ export default class NewRoomForm extends React.Component{
   }
 
   handleClick(e){
+    let room = null;
     let name = document.getElementById('iName').value;
     let maxPlayers = document.getElementById('iPlayers').value;
     let maxRounds = document.getElementById('iRounds').value;
     let categories = [];
+    let state = 'creacted';
 
     var categoriesCheckboxes = document.getElementById("categoriesList").getElementsByTagName("input");
     for(var i=0;i < categoriesCheckboxes.length; i++){
@@ -73,68 +76,77 @@ export default class NewRoomForm extends React.Component{
 
     if(validated)
     {
-      this.props.socket.emit('addGameRoom',{
+        room = {
         name: name,
         maxPlayers: maxPlayers,
         categories: categories,
         maxRounds : maxRounds,
+        players : [],
         admin : sessionStorage.getItem('username'),
-    });
+    }
 
-      this.close();
+    this.props.enterRoom(room);
     }
   }
 
   render(){
     return(
       <div className="newRoomForm">
-        <div className="newRoomForm-form">
-          <div className="newRoomForm-form-close">
-            <button className="delete-btn" onClick={this.close.bind(this)}><strong>&times;</strong></button>
+        <div className="form-line">
+          <div className="form-label">
+              <label>Name</label>
           </div>
-          <div id="roomName-input" className="newRoomForm-form-data">
-            <div className="newRoomForm-form-data-row">
-              <label className="newRoomForm-form-data-row-label">Name</label>
-              <input id='iName' className="newRoomForm-form-data-row-input" type="text">
-              </input>
+          <div className="form-input">
+              <input id='iName' className="form-text-input" type="text"></input>
+          </div>
+        </div>
+        <div className="form-line">
+          <div className="form-label">
+              <label>Max players</label>
+          </div>
+          <div className="form-input">
+            <div className="combo-style">
+              <select id='iPlayers'>
+                  <option key={1} value="2">2</option>
+                  <option key={2} value="3">3</option>
+                  <option key={3} value="4">4</option>
+                  <option key={4} value="5">5</option>
+              </select>
             </div>
-            <div className="newRoomForm-form-data-row">
-              <label className="newRoomForm-form-data-row-label">Max players</label>
+          </div>
+        </div>
+        <div className="form-line">
+            <div className="form-label">
+                <label>Max rounds</label>
+            </div>
+            <div className="form-input">
               <div className="combo-style">
-                <select id='iPlayers'>
-                    <option key={1} value="2">2</option>
-                    <option key={2} value="3">3</option>
-                    <option key={3} value="4">4</option>
-                    <option key={4} value="5">5</option>
-                </select>
-              </div>
+              <select id='iRounds'>
+                  <option key={1} value="10">10</option>
+                  <option key={2} value="11">11</option>
+                  <option key={3} value="12">12</option>
+                  <option key={4} value="13">13</option>
+                  <option key={5} value="14">14</option>
+                  <option key={6} value="15">15</option>
+              </select>
             </div>
-            <div className="newRoomForm-form-data-row">
-              <label className="newRoomForm-form-data-row-label">Max rounds</label>
-              <div className="combo-style">
-                <select id='iRounds'>
-                    <option key={1} value="10">10</option>
-                    <option key={2} value="11">11</option>
-                    <option key={3} value="12">12</option>
-                    <option key={4} value="13">13</option>
-                    <option key={5} value="14">14</option>
-                    <option key={6} value="15">15</option>
-                </select>
-              </div>
             </div>
-            <div className="newRoomForm-form-data-row">
-              <label className="newRoomForm-form-data-row-label">Categories</label>
-                <div id="categoriesList" class="container">
-                  {this.renderCategories()}
-                </div>
+        </div>
+        <div className="form-line">
+            <div className="form-label">
+                <label>Categories</label>
             </div>
-            <div className="categorie">
-              <input id='cbAll' type="checkbox" onChange={this.handleChange.bind(this)} />All
+            <div id="categoriesList" className="categoriesList">
+                {this.renderCategories()}
             </div>
-
-            <div className="newRoomForm-form-data-row">
-              <button className="newRoomForm-form-data-row-btn" onClick={this.handleClick.bind(this)}>Save</button>
+            <div className="allCategories">
+              <input id='cbAll' type="checkbox" onChange={this.handleChange.bind(this)} />
+              <label for="cbAll">All</label>
             </div>
+        </div>
+        <div className="form-line">
+          <div className="form-submit">
+              <button className="form-submit-btn" onClick={this.handleClick.bind(this)}>Be an Admin</button>
           </div>
         </div>
       </div>

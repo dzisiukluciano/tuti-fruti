@@ -14,9 +14,45 @@
   background-color: rgba(255,255,255,0.3);
 }
 
-.chat-messagebox{
-  height: 95%;
+.chat-players{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
   width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-title{
+  font-family: 'Arima Madurai', cursive;
+  height: auto;
+  width: 100%;
+  text-align: center;
+}
+
+.playerlabels-div{
+  height: auto;
+  width: 100%;
+}
+
+.playerlabel{
+  float: left;
+  white-space: nowrap;
+  display: inline-block;
+  border-radius: 10px;
+  padding: 3px 5px;
+  margin: 1px 3px;
+  max-height: 25px;
+}
+
+.chat-messagebox{
+  height: auto;
+  max-height: 72%;
+  width: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 .chat-newmessage{
@@ -37,10 +73,11 @@
   background-color: rgba(0,0,0,0.4);
   border: none;
   border-bottom: 1px solid rgba(0,0,0,0.3);
-  text-align: center;
+  text-align: left;
   font-weight: bold;
   -moz-border-radius-bottomleft: 10px;
   -webkit-border-bottom-left-radius: 10px;
+  padding-left: 2px;
 }
 .chat-message-input:hover{
   border:1px solid rgba(0,0,0,0.3);

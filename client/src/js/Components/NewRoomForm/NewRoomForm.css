@@ -1,82 +1,130 @@
 .newRoomForm{
-  position: absolute;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 90%;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  height: 100%;
   width: 100%;
-  background-color: rgba(0,0,0,0.5);
-}
-.newRoomForm-form{
-  height: 60%;
-  width: 50%;
-  min-width: 300px;
-  min-height: 200px;
-  position: absolute;
-  background: rgb(255,255,255);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 15px;
-  box-shadow: 5px 5px 5px black;
-  padding:2px;
+  border: 10px solid rgba(220, 92, 70, 0.58);
+  border-left: 15px solid rgba(220, 92, 70, 0.58);
+  border-radius: 30px;
+  margin: 10px 0;
+  box-shadow: 1px 2px 9px 0px #000000;
 }
 
-.newRoomForm-form-close{
+
+.form-line{
+  height: auto;
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  height: 10%;
-}
-
-.delete-btn{
-  color: black;
-  background-color: white;
-  border: 2px solid red;
-  border-radius: 2em;
-  padding: 0.1em;
-  margin-right: 0.3em;
-  width: 1.7em;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  font-weight: bold;
-  outline:none;
-}
-
-.delete-btn:hover {
-    background-color: rgb(255,0,0);
-    color: white;
-    border: 2px solid silver;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.8);
-    outline:none;
-}
-
-.newRoomForm-form-data{
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90%;
+  padding: 1%;
+  margin: 5px;
+  font-size: 1.3em;
+  font-family: 'Arima Madurai';
 }
 
-.container{
-  overflow-y: scroll;
+
+.form-label{
+  height: auto;
+  width: 15%;
+}
+
+.form-input{
+  height: auto;
+  width: 85%;
+}
+
+.form-text-input{
+  border-radius: 10px;
+  color: rgb(156,59,59);
+  outline: none;
   height: 100%;
   width: 80%;
-  text-align: left;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  background-color: rgba(0,0,0,0);
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+  text-align: center;
+  font-family: 'Arima Madurai', cursive;
+  font-weight: bold;
+  font-size: 20px;
+}
+.form-text-input:hover{
+  border:1px solid rgba(0,0,0,0.3);
+}
+.form-text-input:focus::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: rgba(0,0,0,0);
+}
+.form-text-input:focus::-moz-placeholder { /* Firefox 19+ */
+  color: rgba(0,0,0,0);
 }
 
-#roomName-input{
-  background-color: rgba(255,255,255,0.7);
-  border-radius: 5px;
+.form-text-input:focus{
+  border: 1px solid rgb(156,59,59);
+}
+
+.categoriesList{
+  height: auto;
+  width: 50%;
+  padding-left: 5%;
+}
+.allCategories{
+  height: auto;
+  width: 35%;
+}
+
+.form-submit{
+  width: 100%;
+  height: 70px;
+}
+
+.form-submit-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Calibri';
   text-align: center;
-  width: 80%;
-  font-weight: bold;
+  width: 100%;
+  height: 100%;
+  font-size: 3em;
+	-moz-box-shadow: 0px 1px 7px 0px #3dc21b;
+	-webkit-box-shadow: 0px 1px 7px 0px #3dc21b;
+	box-shadow: 0px 1px 7px 0px #3dc21b;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #44c767), color-stop(1, #5cbf2a));
+	background:-moz-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+	background:-webkit-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+	background:-o-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+	background:-ms-linear-gradient(top, #44c767 5%, #5cbf2a 100%);
+	background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#44c767', endColorstr='#5cbf2a',GradientType=0);
+	background-color:#44c767;
+	-moz-border-radius:27px;
+	-webkit-border-radius:27px;
+	border-radius:27px;
+	border:3px solid #18ab29;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	text-decoration:none;
+	text-shadow:0px 3px 7px #18610d;
+}
+.form-submit-btn:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cbf2a), color-stop(1, #44c767));
+	background:-moz-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
+	background:-webkit-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
+	background:-o-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
+	background:-ms-linear-gradient(top, #5cbf2a 5%, #44c767 100%);
+	background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cbf2a', endColorstr='#44c767',GradientType=0);
+	background-color:#5cbf2a;
+}
+.form-submit-btn:active {
+	position:relative;
+	top:1px;
 }
 
 .combo-style {
@@ -85,6 +133,7 @@
     width: 80%;
     height: auto;
     overflow: hidden;
+    text-align: center;
 }
 
 .combo-style select {
@@ -92,56 +141,24 @@
     width: 100%;
     border: none;
     box-shadow: none;
-    background: transparent;
+    background: rgba(0,0,0,0);
     background-image: none;
     -webkit-appearance: none;
     text-align: center;
     color: #a32424;
     font-weight: bold;
+    text-align: center;
 }
 
 .combo-style select option {
     text-align: center;
+    text-align: center;
     color: #a32424;
+    background: rgba(200,200,200,.5);
 }
 
 .combo-style select:focus {
     outline: none;
-}
-
-.newRoomForm-form-data-row{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.newRoomForm-form-data-row-input{
-  width: 80%;
-  height: 35%;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  color: #a32424;
-  font-weight: bold;
-}
-
-.newRoomForm-form-data-row-label{
-  margin-right: 5%;
-  width: 20%;
-}
-
-.newRoomForm-form-data-row-btn{
-  width: 100%;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  border-radius: 10px;
-  border: 2px solid #4CAF50;
-  background-color: white;
-}
-
-.newRoomForm-form-data-row-btn:hover {
-    background-color: #4CAF50; /* Green */
-    color: white;
 }
 
 .categorie{

@@ -1,0 +1,110 @@
+.seekRoom{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.seekDiv{
+  margin-top: 3%;
+  margin-bottom: -3%;
+  height: auto;
+  width: 100%;
+  border-radius: 10px;
+  background-color: rgba(125,0,0,0.4);
+  padding: 0;
+}
+
+.seek{
+  text-align: center;
+  width: 96%;
+  margin: 2%;
+  padding: 1%;
+  border-radius: 10px;
+  background-color: rgba(255,255,255,0.5);
+}
+
+.seekInput{
+  border-radius: 10px;
+  color: rgb(156,59,59);
+  outline: none;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0);
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+  text-align: center;
+  font-family: 'Arima Madurai', cursive;
+  font-weight: bold;
+
+}
+
+.seekInput::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: black;
+}
+.seekInput::-moz-placeholder { /* Firefox 19+ */
+  color: black;
+}
+
+
+.seekInput:hover{
+  border:1px solid rgba(0,0,0,0.3);
+}
+.seekInput:focus::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: rgba(0,0,0,0);
+}
+.seekInput:focus::-moz-placeholder { /* Firefox 19+ */
+  color: rgba(0,0,0,0);
+}
+
+.seekInput:focus{
+  border: 1px solid rgb(156,59,59);
+}
+
+.empty{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Arima Madurai', cursive;
+  color: black;
+  font-weight: bold;
+  padding-top: 5%;
+}
+
+.roomList-list{
+  margin-top: 5%;
+  height: auto;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background-color: rgba(125,0,0,0.4);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+
+.scrollbar
+{
+	float: left;
+	overflow-y: auto;
+}
+
+.scrollbar::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: rgb(108, 3, 3);
+}
+.scrollbar::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: rgb(108, 3, 3);
+}
+.scrollbar::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #D62929;
+}

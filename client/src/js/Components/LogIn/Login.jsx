@@ -4,6 +4,7 @@ import Main from '../Main/Main.jsx';
 import { hashHistory } from 'react-router';
 import $ from 'jquery';
 
+
 export default class Login extends React.Component{
 
   handleLogIn(e){
@@ -18,7 +19,7 @@ export default class Login extends React.Component{
         }
         else{
           window.sessionStorage.setItem('username',username.value);
-          hashHistory.replace("/Main");
+          hashHistory.push("/Main");
         }
       }
       else {
@@ -30,7 +31,7 @@ export default class Login extends React.Component{
   getUsernames(){
     var names = [];
     $.ajax({
-            url: 'http://192.168.0.103:3000/getUsernames',
+            url: 'http://192.168.0.106:3000/getUsernames',
             success: (res,status)=>{
               names =  res;
             },
