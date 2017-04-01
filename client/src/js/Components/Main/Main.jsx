@@ -3,11 +3,13 @@ import Style from './Main.css';
 import Game from '../Game/Game.jsx';
 import RoomList from '../RoomList/RoomList.jsx';
 import { hashHistory } from 'react-router';
+import SocketIOClient from 'socket.io-client';
+import Config from '../../../../config/config.js';
 
 export default class Main extends React.Component{
 
   static defaultProps = {
-      socket : io('http://localhost:3000'),
+      socket : SocketIOClient('http://'+ Config.server.host + ':' + Config.server.port.port ),
       alphabet : 'abcdefghijklmnopqrstuvwxyz'.split(''),
   };
 
