@@ -1,11 +1,16 @@
 import React from 'react';
-import Style from './Login.css';
+import Style from './Login.scss';
 import Main from '../Main/Main.jsx';
 import { hashHistory } from 'react-router';
 import $ from 'jquery';
 
 
 export default class Login extends React.Component{
+
+  constructor(){
+    super();
+  }
+
 
   handleLogIn(e){
 
@@ -52,13 +57,13 @@ export default class Login extends React.Component{
       <div className="login">
         <div className="login-form">
           <div className="login-form-data">
-            <h2 class="login-form-data-h2">Pick a name</h2>
+            <h2 className="">Pick a name</h2>
           </div>
           <div className="login-form-data">
-            <input id='iUser' className="login-form-data-input" onKeyUp={this.handleLogIn.bind(this)} type="text"></input>
+            <input id='iUser' className="" placeholder="username" onKeyUp={this.handleLogIn.bind(this)} type="text"></input>
           </div>
           <div className="login-form-data">
-            <button className="login-form-data-button" type="button" onClick={this.handleLogIn.bind(this)}><strong>GO</strong></button>
+            <button onClick={this.handleLogIn.bind(this)}/>
           </div>
         </div>
       </div>
