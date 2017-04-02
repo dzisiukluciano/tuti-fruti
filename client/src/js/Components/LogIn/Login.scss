@@ -4,60 +4,75 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-image: url('./resources/fruits.png');
+  background-size: cover;
 
   .login-form{
     height: 30%;
     width: 30%;
-    background-color: rgba(125,0,0,0.4);
+    background-color: rgba(125,0,0,0.7);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0px 0px 37px rgba(0,0,0,0.4);
-  }
-}
-
-.login-form-data{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-family: 'Arima Madurai', cursive;
-  font-style: oblique;
-
-  input{
-    width: 90%;
-    height: 60%;
-    font-size: 100%;
-    color: rgba(255,255,255,0.6);
-    text-align: center;
-    background-color: rgba(255,255,255,0);
-    border: none;
-    border-bottom: 1px solid;
-    border-bottom-color: rgba(255,255,255,0.5);
-    outline: none;
+    }
   }
 
-  input:hover,input:focus{
-    border-bottom: 2px solid;
-    border-bottom-color: rgba(255,255,255,0.5);
+  .login-form-data{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+    h2{
+      text-align: center;
+      font-family: 'Arima Madurai', cursive;
+      font-style: oblique;
+      width: inherit;
+    }
+
+    input{
+      width: 90%;
+      height: 60%;
+      font-size: 100%;
+      color: rgba(255,255,255,0.9);
+      text-align: center;
+      background-color: rgba(255,255,255,0);
+      border: none;
+      border-bottom: 1px solid;
+      border-bottom-color: rgba(255,255,255,0.7);
+      outline: none;
+    }
+
+    input:hover,input:focus{
+      border-bottom: 2px solid;
+      border-bottom-color: rgba(255,255,255,0.5);
+    }
+
+    button{
+      height: 50px;
+      width: 50px;
+      background-size: cover;
+      background-color: rgba(255,255,255,0);
+      border: none;
+      outline: none;
+      background-image: url('./resources/right_arrow.png');
+    }
+
+    button:hover{
+      position: relative;
+      top: -2px;
+      cursor: pointer;
+    }
   }
 
-  button{
-    height: 50px;
-    width: 50px;
-    background-size: cover;
-    background-color: rgba(255,255,255,0);
-    border: none;
-    outline: none;
-    background-image: url('../../../resources/right_arrow.png');
-  }
-
-  button:hover{
-    position: relative;
-    top: -2px;
-    cursor: pointer;
-  }
+  .rainbow {
+    background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+    background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+    color:transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
 }

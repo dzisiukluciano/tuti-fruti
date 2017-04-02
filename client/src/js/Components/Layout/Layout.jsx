@@ -10,12 +10,31 @@ import Game from  "../Game/Game.jsx";
 import Round from  "../Round/Round.jsx";
 import Points from  "../Points/Points.jsx";
 
+import Config from '../../../../config/config.js';
+import SocketIOClient from 'socket.io-client';
+
 export default class Layout extends React.Component{
+
+  static defaultProps = {
+      socket : SocketIOClient('http://'+ Config.server.host + ':' + Config.server.port.port ),
+  };
+
+  constructor(props,defaultProps){
+    super(props,defaultProps);
+  };
+
+
+  componentDidMount(){
+  }
+
+  componentWillUnmount(){
+  };
+
 
   render(){
     return(
     <Router history={hashHistory}>
-      <Route path="/" component={Login}></Route>
+      <Route path="/" component={() => (<Login socket= {this.props.socket} />)}></Route>
       <Route path="/Main" component={Main}>
         <IndexRoute component={RoomList}></IndexRoute>
         <Route path="/RoomList" component={RoomList}></Route>

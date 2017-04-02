@@ -12,24 +12,35 @@ const socket_events = {
   io.on('connection', function(socket){
     console.log('user connected ');
 
+    socket.on('tryLoggin',function(msg){
+      console.log(`${chalk.yellow('tryLoggin Triggered')}`);
+
+      if(TutiFruti.players.usernameTaken(msg.username)){
+        console.log('username taken');
+      }else{
+        console.log('username available');
+      }
+    });
+/**************************************************/
     socket.on('addUser',function(msg){
-      addPlayer(socket,msg.user)
+      //addPlayer(socket,msg.user)
     });
 
     socket.on('disconnect', function(){
+      console.log('disconneting');
       let playerName = null;
       let playerIndex = null;
       //find which player has disconected
-      players.forEach(function(item,i){
-        if(item.socketId == socket.id)
-            playerName = item.name;
-            playerIndex = i;
-      });
-      console.log('player disconected: ', playerName);
-      removePlayer(socket,playerName);
-      if(playerIndex != null)
-        players.splice(playerIndex,1);
-      console.log('remaining global players: ',players);
+      //players.forEach(function(item,i){
+      //  if(item.socketId == socket.id)
+      //      playerName = item.name;
+      //      playerIndex = i;
+    //  });
+      //console.log('player disconected: ', playerName);
+      //removePlayer(socket,playerName);
+    //  if(playerIndex != null)
+    //    players.splice(playerIndex,1);
+    //  console.log('remaining global players: ',players);
     });
 
     socket.on('addGameRoom',function(msg){
