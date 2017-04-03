@@ -13,36 +13,27 @@ export default class Login extends React.Component{
   }
 
   componentWillMount(){
-    this.props.socket.on('login',() => {
-        console.log('logging');
+    this.props.socket.on('usernameTaken',() => {
+      console.log('username is alredy taken');
+    });
+
+    this.props.socket.on('login',(msg) => {
+      console.log('logged in succefull');
+      window.sessionStorage.setItem('username',msg.username);
+      hashHistory.push("/Main");
     });
   }
 
   handleLogIn(e){
-
-
     if(e.type == 'click' || (e.type = 'keyup' && e.which == 13)){
       let username = document.getElementById('iUser');
       if(username.value != '')
       {
-        this.props.socket.emit('tryLoggin',{
+        this.props.socket.emit('tryLogin',{
             username: username.value,
         });
-
-
-
-        //if(usedNames.indexOf(username.value) != -1){
-      //      alert('That username is alredy in use, please select another');
-      //  }
-      //  else{
-          //window.sessionStorage.setItem('username',username.value);
-          //hashHistory.push("/Main");
-    //    }
       }
     }
-
-
-
   }
 
   render(){

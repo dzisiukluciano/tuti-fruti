@@ -11,6 +11,10 @@ export default class Main extends React.Component{
     super();
   }
 
+  componentWillMount(){
+    console.log('loading Main component with socket: ', this.props.socket, ' and user: ', sessionStorage.getItem('username'));
+  };
+
   enterRoom(room){
     if(room != null){
     //  this.props.socket.emit('addGameRoom',room);//wait for callback

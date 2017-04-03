@@ -4,14 +4,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url('./resources/fruits.png');
+  //background-image: url('./resources/fruits.png');
   background-size: cover;
 
   .login-form{
     height: 30%;
     width: 30%;
-    background-color: rgba(125,0,0,0.7);
-    border-radius: 20px;
+    background-color: rgba(125,0,0,0.8);
+    //border-radius: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

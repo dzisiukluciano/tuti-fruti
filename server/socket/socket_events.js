@@ -12,22 +12,24 @@ const socket_events = {
   io.on('connection', function(socket){
     console.log('user connected ');
 
-    socket.on('tryLoggin',function(msg){
-      console.log(`${chalk.yellow('tryLoggin Triggered')}`);
+    socket.on('tryLogin',function(msg){
+      console.log(`${chalk.yellow('tryLogin Triggered')}`);
 
-      if(TutiFruti.players.usernameTaken(msg.username)){
-        console.log('username taken');
+      let users = TutiFruti.players.getUsers(msg.username);
+
+      if(users.length > 0){
+        socket.emit('usernameTaken',{});
       }else{
-        console.log('username available');
+        TutiFruti.players.add(socket.id,msg.username);
+        socket.emit('login',msg);
       }
+
+      console.log(`${chalk.green('tryLogin finished')}`);
     });
 /**************************************************/
-    socket.on('addUser',function(msg){
-      //addPlayer(socket,msg.user)
-    });
 
     socket.on('disconnect', function(){
-      console.log('disconneting');
+      console.log('disconnecting');
       let playerName = null;
       let playerIndex = null;
       //find which player has disconected

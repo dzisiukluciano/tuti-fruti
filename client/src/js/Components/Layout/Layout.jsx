@@ -35,7 +35,7 @@ export default class Layout extends React.Component{
     return(
     <Router history={hashHistory}>
       <Route path="/" component={() => (<Login socket= {this.props.socket} />)}></Route>
-      <Route path="/Main" component={Main}>
+      <Route path="/Main" component={() => (<Main socket= {this.props.socket} />)}>
         <IndexRoute component={RoomList}></IndexRoute>
         <Route path="/RoomList" component={RoomList}></Route>
         <Route path="/Game" component={Game}></Route>
