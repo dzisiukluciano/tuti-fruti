@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import TutiFruti from '../game/tuti-fruti';
+import TF from '../game/tuti-fruti';
 
 const socket_events = {
 
@@ -7,22 +7,24 @@ const socket_events = {
 
   console.log(`${chalk.yellow('binding events...')}`);
 
-  console.log(`${chalk.cyan('TutiFruti: ')} ${chalk.cyan(TutiFruti.rooms)}`);
-
   io.on('connection', function(socket){
     console.log('user connected ');
 
     socket.on('tryLogin',function(msg){
+
       console.log(`${chalk.yellow('tryLogin Triggered')}`);
 
-      let users = TutiFruti.players.getUsers(msg.username);
+      let users = TF.players.getUsers(msg.username);
+      let socketid = io.sockets.connected[socket.id];
 
-      if(users.length > 0){
-        socket.emit('usernameTaken',{});
-      }else{
-        TutiFruti.players.add(socket.id,msg.username);
-        socket.emit('login',msg);
-      }
+      if(socketid){
+          if(users.length > 0){
+            socketid.emit('usernameTaken',{});
+          }else{
+            TF.players.add(socket.id,msg.username);
+            socketid.emit('login',msg);
+          }
+      };
 
       console.log(`${chalk.green('tryLogin finished')}`);
     });

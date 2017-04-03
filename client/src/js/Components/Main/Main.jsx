@@ -91,12 +91,11 @@ export default class Main extends React.Component{
     return(
       <div className="main-div">
         <div className='main-header'>
-          {room}
-          {title}
+
           <div className="username">{sessionStorage.getItem('username')}</div>
         </div>
         <div className='main-body'>
-          {childrenWithProps}
+
         </div>
       </div>
     );
