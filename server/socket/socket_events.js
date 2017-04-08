@@ -1,9 +1,11 @@
 import chalk from 'chalk';
-import TF from '../game/tuti-fruti';
+import TutiFruti from '../game/tuti-fruti';
 
 const socket_events = {
 
   bind: (io) => {
+
+  let TF = new TutiFruti;
 
   console.log(`${chalk.yellow('binding events...')}`);
 
@@ -11,7 +13,6 @@ const socket_events = {
     console.log('user connected ');
 
     socket.on('tryLogin',function(msg){
-
       console.log(`${chalk.yellow('tryLogin Triggered')}`);
 
       let users = TF.players.getUsers(msg.username);
@@ -28,8 +29,22 @@ const socket_events = {
 
       console.log(`${chalk.green('tryLogin finished')}`);
     });
-/**************************************************/
 
+
+
+    socket.on('disconnect',() => {
+        console.log(`${chalk.yellow('disconnect Triggered')}`);
+
+        TF.players.remove(socket.id);
+
+        console.log(`${chalk.green('diconnect finished')}`);
+    });
+
+
+
+
+/**************************************************/
+/*
     socket.on('disconnect', function(){
       console.log('disconnecting');
       let playerName = null;
@@ -56,7 +71,7 @@ const socket_events = {
         io.sockets.connected[socket.id].emit('onRoomAdded',msg);
       }
     });
-
+*/
     socket.on('joinRoom',function(msg){
       console.log(msg.user + ' is joining room ' + msg.room.name);
       addPlayerToRoom(socket,msg.user,msg.room);
