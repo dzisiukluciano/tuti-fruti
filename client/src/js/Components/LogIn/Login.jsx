@@ -3,13 +3,10 @@ import Style from './Login.scss';
 import Main from '../Main/Main.jsx';
 import { hashHistory } from 'react-router';
 
-
-
 export default class Login extends React.Component{
 
   constructor(){
     super();
-
   }
 
   componentWillMount(){
@@ -37,17 +34,18 @@ export default class Login extends React.Component{
   }
 
   render(){
+
     return(
       <div className="login">
         <div className="login-form">
-          <div className="login-form-data rainbow">
-            <h2 className="">Pick your username</h2>
+          <div className="login-form-data">
+            <h1 className="bold">Pick your username</h1>
           </div>
           <div className="login-form-data">
-            <input id='iUser' className="" placeholder="username" onKeyUp={this.handleLogIn.bind(this)} type="text"></input>
+            <input id='iUser' className="" onChange={this.handleClick} placeholder="username" onKeyUp={this.handleLogIn.bind(this)} type="text"></input>
           </div>
           <div className="login-form-data">
-            <button onClick={this.handleLogIn.bind(this)}/>
+            <label className="black" onClick={this.handleLogIn.bind(this)}>GO</label>
           </div>
         </div>
       </div>

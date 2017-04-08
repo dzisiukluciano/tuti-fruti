@@ -1,8 +1,10 @@
 import React from "react";
 import { IndexRoute , Router , Route , hashHistory } from 'react-router';
 
-import Style from './Layout.css';
+import Style from './Layout.scss';
 
+import Frame from '../Frame/Frame.jsx';
+import Presentation from '../Presentation/Presentation.jsx';
 import Login from '../Login/Login.jsx';
 import Main from  "../Main/Main.jsx";
 import RoomList from  "../RoomList/RoomList.jsx";
@@ -23,18 +25,25 @@ export default class Layout extends React.Component{
     super(props,defaultProps);
   };
 
-
-  componentDidMount(){
-  }
-
-  componentWillUnmount(){
-  };
-
-
   render(){
     return(
     <Router history={hashHistory}>
-      <Route path="/" component={() => (<Login socket= {this.props.socket} />)}></Route>
+      <Route path="/" component={Frame}>
+        <IndexRoute component={Presentation}></IndexRoute>
+        <Route path="/Presentation" component={Presentation}></Route>
+        <Route path="/Login" component={() => (<Login socket= {this.props.socket} />)}></Route>
+        <Route path="/Main" component={() => (<Main socket= {this.props.socket} />)}></Route>
+      </Route>
+    </Router>
+    );
+  }
+
+/*
+  render(){
+    return(
+    <Router history={hashHistory}>
+      <Route path="/" component={Presentation}></Route>
+      <Route path="/Login" component={() => (<Login socket= {this.props.socket} />)}></Route>
       <Route path="/Main" component={() => (<Main socket= {this.props.socket} />)}>
         <IndexRoute component={RoomList}></IndexRoute>
         <Route path="/RoomList" component={RoomList}></Route>
@@ -42,6 +51,6 @@ export default class Layout extends React.Component{
       </Route>
     </Router>
     );
-  }
+  }*/
 
 }
